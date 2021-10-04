@@ -112,13 +112,10 @@ conf defines the different grids available, and the default (starting) grid. Con
 
 ### Responsive layout
 
-Plans concerning the layout flow.
-    fullscreen takes the entire screen
-    ratio is calculated and positioned. conf.hSpace and conf.vSpace are taken into account when the size of the board is calculated.
+`fullscreen` takes the entire screen. The size and position of `ratio` is calculated based on `state.grid` (the current grid size), `conf.hSpace` and `conf.vSpace`.
 
-    board flows inside
-    nav flows inside
-    options are positioned abs, toggled by nav
+The board flows inside the ratio container. The width and height of the board is also calculated to avoid rounding errors caused by box-sizing: content-box and padding-bottom scaling. With a tile size of 100px, the board is 404x408 when using that technique.
+
 
 ## October 5th
 ## October 6th
