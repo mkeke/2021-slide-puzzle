@@ -4,6 +4,10 @@
     configurable values
 */
 const conf = {
+    // screen max/min width including padding
+    minWidth: 380,
+    maxWidth: 800,
+
     grids: [3, 4, 5, 6],
     defaultGrid: 4,
 

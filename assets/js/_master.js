@@ -1,8 +1,8 @@
 const master = {
     init: function() {
         log("master.init()");
-        dom.init();
         state.init();
+        dom.init();
         def.init();
         board.init();
     },

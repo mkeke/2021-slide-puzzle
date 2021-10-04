@@ -68,7 +68,7 @@ Making a list of what to do and in what order. More tasks might be added through
 
     v init github project
     v set up codebase, define objects, definitions, ..
-    - create responsive layout with current grid size
+    v create responsive layout with current grid size
     - build tile markup, assign background image
         - css class coordinates to align image
         - image must cover all tiles in grid
@@ -108,13 +108,14 @@ Hello, I just created this readme file and a folder for screenshots. Let's go!
 ### Codebase
 
 Setting up the codebase, based on experience from the games I've made recently.
-conf defines the different grids available, and the default (starting) grid. This is needed to calculate the correct board and layout size in the next step.
+conf defines the different grids available, and the default (starting) grid. Conf also defines the white space on either side of the board. This is needed to calculate the correct board and layout size in the next step.
 
 ### Responsive layout
 
-Plans concerning the layout flow
+Plans concerning the layout flow.
     fullscreen takes the entire screen
-    ratio is calculated and positioned
+    ratio is calculated and positioned. conf.hSpace and conf.vSpace are taken into account when the size of the board is calculated.
+
     board flows inside
     nav flows inside
     options are positioned abs, toggled by nav
