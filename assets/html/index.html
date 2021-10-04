@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta 
+        name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+    <!-- for Google -->
+    <!--
+    <meta name="description" content="Slide puzzle game" />
+    <meta name="keywords" content="puzzle,game,html,css,javascript" />
+    <meta name="author" content="Simen Lysebo" />
+    <meta name="copyright" content="" />
+    -->
+
+    <!-- for Facebook -->          
+    <!--
+    <meta property="og:title" content="Slide puzzle game" />
+    <meta property="og:type" content="game" />
+    <meta property="og:image" content="https://lysebo.xyz/games/slidepuzzle/assets/images/thumb.jpg" />
+    <meta property="og:url" content="https://lysebo.xyz/games/slidepuzzle" />
+    <meta property="og:description" content="Sliding tile puzzle game by Simen Lysebo (devtober 2021)." />
+    -->
+
+    <title>@@pageTitle</title>
+
+    <style>/* inline main.min.css */</style>
+
+    <style class="runtime"></style>
+</head>
+<body>
+    <div class="fullscreen">
+        <div class="ratio"><!-- abs pos, size defined in runtime css -->
+            <section class="board"><!-- responsive 100% 1:1 -->
+                <ul class="tiles"></ul><!-- size equals 1 tile, defined in runtime -->
+                <section class="options"></section><!-- abs pos toggle -->
+            </section>
+            <nav><a class="options" href="#"></a></nav><!-- flow -->
+        </div>
+    </div>
+    <script>/* inline main.min.js */</script>
+</body>
+</html>
+

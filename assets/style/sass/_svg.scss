@@ -1,0 +1,76 @@
+/*
+    svg($body, $vbx1, $vby1, $vbx2, $vby2, $size: 'contain', $position: 'left top')
+
+        Creates an svg background image of the svg defined in $body
+
+    usage
+        $svg-body: (
+            '<g stroke="none" fill="#ff0000">'
+            '<circle cx="50" cy="50" r="25" />'
+            '</g>'
+        );
+        @include svg($svg-body, 0, 0, 100, 100);
+
+    requirements
+        uses function str-replace (included in this file)
+
+    params
+        $body: an array with the elements of the svg.
+            The enclosing <svg> and </svg> are not required
+        $vbx1: viewbox x1
+        $vby1: viewbox y1
+        $vbx2: viewbox x2
+        $vby2: viewbox y2
+        $size: background-size value. Default is 'contain' 
+        $position: background-position value. Default is 'left top'
+        
+    return
+        sets the following attributes:
+            background-image
+            background-repeat
+            background-size
+            background-position
+*/
+@mixin svg($body, $vbx1, $vby1, $vbx2, $vby2, $size: 'contain', $position: 'left top') {
+
+    $mimetype: "data:image/svg+xml;utf8,";
+    $open: "<svg viewBox='#{$vbx1} #{$vby1} #{$vbx2} #{$vby2}' xmlns='http://www.w3.org/2000/svg'>";
+    $close: "</svg>";
+
+    $svg: $mimetype + $open;
+    @each $p in $body {
+        $svg: $svg + str-replace($p, '#', '%23');
+    }
+    $svg: $svg + $close;
+
+    background-image: url($svg);
+    background-repeat: no-repeat;
+    background-size: #{$size};
+    background-position: #{$position};
+}
+
+/*
+    str-replace($string, $search, $replace)
+        replaces all ocurrences of $search with $replace in $string
+    usage
+        $name: "James Bond";
+        $name: str-replace($name, "Bond", "Blonde")
+    requirements
+        none
+    params
+        $string: source string
+        $search: query
+        $replace: replacement for query
+    return
+        a string
+*/
+@function str-replace($string, $search, $replace: '') {
+    $index: str-index($string, $search);
+
+    @if $index {
+        @return str-slice($string, 1, $index - 1) + $replace 
+        + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+    }
+
+    @return $string;
+}

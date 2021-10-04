@@ -66,8 +66,8 @@ Select image dialog. Select from some predefined images
 
 Making a list of what to do and in what order. More tasks might be added throughout the process, the order might be changed. This list will be updated to reflect the process. 
 
-    - init github project
-    - set up codebase, define objects, definitions, ..
+    v init github project
+    v set up codebase, define objects, definitions, ..
     - create responsive layout with current grid size
     - build tile markup, assign background image
         - css class coordinates to align image
@@ -96,13 +96,28 @@ Making a list of what to do and in what order. More tasks might be added through
     - random image, restart
     - drag-drop, restart
     - upload image, restart
+    - create google/facebook meta tags. remember correct image ratio
+    - upload game to server
     - link to github
     - add process description + screenshots ++ to readme.md
 
-### init GitHub project
+### Init GitHub project
 
 Hello, I just created this readme file and a folder for screenshots. Let's go!
 
+### Codebase
+
+Setting up the codebase, based on experience from the games I've made recently.
+conf defines the different grids available, and the default (starting) grid. This is needed to calculate the correct board and layout size in the next step.
+
+### Responsive layout
+
+Plans concerning the layout flow
+    fullscreen takes the entire screen
+    ratio is calculated and positioned
+    board flows inside
+    nav flows inside
+    options are positioned abs, toggled by nav
 
 ## October 5th
 ## October 6th
