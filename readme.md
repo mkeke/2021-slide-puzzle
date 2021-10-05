@@ -69,12 +69,13 @@ Making a list of what to do and in what order. More tasks might be added through
     v init github project
     v set up codebase, define objects, definitions, ..
     v create responsive layout with current grid size
-    - build tile markup, assign background image
+    v build tile markup, assign background image
         - css class coordinates to align image
         - image must cover all tiles in grid
         - all image ratios must work, not just 1:1
     - runtime css where needed
         - background image as base64 string?
+        - only if custom image. runtime-image style section + state flag
     - grid on top of tiles (before/after)
     - scramble board n times. Don't repeat last step.
         - free space in upper left corner
@@ -114,10 +115,21 @@ conf defines the different grids available, and the default (starting) grid. Con
 
 `fullscreen` takes the entire screen. The size and position of `ratio` is calculated based on `state.grid` (the current grid size), `conf.hSpace` and `conf.vSpace`.
 
-The board flows inside the ratio container. The width and height of the board is also calculated to avoid rounding errors caused by box-sizing: content-box and padding-bottom scaling. With a tile size of 100px, the board is 404x408 when using that technique.
+The board flows inside the ratio container. I calculate the width and height of the board and set is as a runtime style. Another approach would be to use padding-bottom as ratio for the board, but in this case the browser renders the board slightly higher than the width. This is because I have box-sizing: content-box and a 2px border on the element. With a tile size of 100px, the board is 404x408 when using that technique.
 
+<img src="screenshots/04-skeleton.png" />
+
+Yuuuup, just like that. Gray area is ratio wrapper. Red area is board with 2px border.
 
 ## October 5th
+
+### Tile markup and background images
+
+Generating tiles based on the selected grid size (state.grid) and positioning them inside the tiles container. The size of the tiles container is one tile, thus making positioning of the tiles easy and responsive, in 100% increments.
+
+The background image is slightly more tricky.
+each tile has a div that is the size of the entire board, and positioned differently based on the initial coordinate. The tile has the background image covered. This works with 100% increments. No need to calculate based on grid size.
+
 ## October 6th
 ## October 7th
 ## October 8th

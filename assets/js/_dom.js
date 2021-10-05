@@ -10,9 +10,6 @@ const dom = {
     ratio: null,
     boardWrapper: null,
     board: null,
-    tiles: null,
-    current: null,
-    start: null,
 
     init: function() {
         log("dom.init()");
@@ -60,13 +57,9 @@ const dom = {
         let innerWidth = Math.min(conf.maxWidth, 
                             Math.max(conf.minWidth, window.innerWidth));
 
-        log("innerWidth " + innerWidth);
-
         // attempt to determine tile size based on available screen width
         let tileSize = Math.floor(
             (innerWidth-conf.hSpace)/state.grid);
-
-        log("1st tileSize " + tileSize);
 
         // calculate width and height of ratio element based on tile size
         let ratioWidth = tileSize * state.grid + conf.hSpace;
@@ -74,7 +67,6 @@ const dom = {
 
         // if height is too much, use height as basis for size calc instead
         if(ratioHeight > window.innerHeight) {
-            log("height too large " + ratioHeight + " > " + window.innerHeight);
             tileSize = Math.floor(
                 (window.innerHeight - conf.vSpace)/state.grid);
 
@@ -87,11 +79,11 @@ const dom = {
         state.tileSize = tileSize;
         state.ratioWidth = ratioWidth;
         state.ratioHeight = ratioHeight;
-        // ratio container is centered
+        // ratio container is centered horizontally and placed near the top
         state.ratioLeft = Math.floor((window.innerWidth - state.ratioWidth) / 2);
-        state.ratioTop = Math.floor((window.innerHeight - state.ratioHeight) / 2);
+        state.ratioTop = Math.floor((window.innerHeight - state.ratioHeight) / 10);
 
-        log(`screen:${window.innerWidth}x${window.innerHeight} ratio:${state.ratioWidth}x${state.ratioHeight} tile:${tileSize}`);
+        log(`board: ${state.tileSize * state.grid}x${state.tileSize * state.grid}`);
     },
 
     /*
@@ -112,12 +104,12 @@ const dom = {
                 `top:${state.ratioTop}px;` +
                 '}';
 
-        str += '.board{' +
+        str += '.board, .tiles li div{' +
                 `width:${state.tileSize * state.grid}px;` + 
                 `height:${state.tileSize * state.grid}px;` +
                 '}';
 
-        str += '.tiles, .tiles li{' +
+        str += '.tiles{' +
                 `width:${state.tileSize}px;` + 
                 `height:${state.tileSize}px;` +
                 '}';
@@ -125,5 +117,15 @@ const dom = {
         this.runtimeStyle.innerHTML = str;
     },
 
-
+    generateTileGrid: function() {
+        let str = "";
+        for(let x=0; x<state.grid; x++) {
+            for(let y=0; y<state.grid; y++) {
+                if(!(x==state.grid-1 && y==state.grid-1)) {
+                    str += `<li class="x${x} y${y}"><div></div></li>`;
+                }
+            }
+        }
+        dom.board.innerHTML = str;
+    }
 };

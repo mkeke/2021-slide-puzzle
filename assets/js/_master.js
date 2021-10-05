@@ -5,5 +5,8 @@ const master = {
         dom.init();
         def.init();
         board.init();
+
+        // starting a new game right away
+        state.newGame();
     },
 };
