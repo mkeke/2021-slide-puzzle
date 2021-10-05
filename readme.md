@@ -69,14 +69,14 @@ Making a list of what to do and in what order. More tasks might be added through
     v init github project
     v set up codebase, define objects, definitions, ..
     v create responsive layout with current grid size
+    v runtime css where needed
     v build tile markup, assign background image
-        - css class coordinates to align image
-        - image must cover all tiles in grid
-        - all image ratios must work, not just 1:1
-    - runtime css where needed
-        - background image as base64 string?
+        v css class coordinates to align image
+        v image must cover all tiles in grid
+        v all image ratios must work, not just 1:1
+    v grid on top of tiles (before/after)
+    - background image as base64 string?
         - only if custom image. runtime-image style section + state flag
-    - grid on top of tiles (before/after)
     - scramble board n times. Don't repeat last step.
         - free space in upper left corner
     - options toggle. svg icon. semitransparent layer
@@ -123,14 +123,24 @@ Yuuuup, just like that. Gray area is ratio wrapper. Red area is board with 2px b
 
 ## October 5th
 
+### runtime css
+
+It's convenient to update a style section instead of assigning styles to every DOM element. This is done for each screen resize, and everythime the grid changes.
+
 ### Tile markup and background images
 
 Generating tiles based on the selected grid size (state.grid) and positioning them inside the tiles container. The size of the tiles container is one tile, thus making positioning of the tiles easy and responsive, in 100% increments.
 
-<img src="screenshots/05-bgimage.png"/>
-
 The background image is slightly more tricky.
 each tile has a div that is the size of the entire board, and positioned differently based on the initial coordinate. The tile has the background image covered. This works with 100% increments. No need to calculate based on grid size.
+
+### grid borders
+
+Using the before-element on each tile to set a shiny 2px border.
+
+<img src="screenshots/05-bgimage.png"/>
+
+I'll deal with the color palette later :-D
 
 ## October 6th
 ## October 7th
