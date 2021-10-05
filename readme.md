@@ -127,6 +127,8 @@ Yuuuup, just like that. Gray area is ratio wrapper. Red area is board with 2px b
 
 Generating tiles based on the selected grid size (state.grid) and positioning them inside the tiles container. The size of the tiles container is one tile, thus making positioning of the tiles easy and responsive, in 100% increments.
 
+<img src="screenshots/05-bgimage.png"/>
+
 The background image is slightly more tricky.
 each tile has a div that is the size of the entire board, and positioned differently based on the initial coordinate. The tile has the background image covered. This works with 100% increments. No need to calculate based on grid size.
 
