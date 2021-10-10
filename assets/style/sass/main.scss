@@ -54,6 +54,7 @@ body {
         position: absolute;
 
         // left + top is updated runtime on each tile
+        transition: left 0.2s linear, top 0.2s linear;
 
         &:after {
             position: absolute;

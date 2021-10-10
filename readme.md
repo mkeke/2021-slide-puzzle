@@ -77,11 +77,11 @@ Making a list of what to do and in what order. More tasks might be added through
     v grid on top of tiles (before/after)
     v scramble board n times. Don't repeat last step.
     v space tile in upper left corner after scramble
-    - click tile handler
+    v click tile handler
+    v move tile. 100% increments. update left top on element
+    v move multiple tiles along the same path
+    v move with transition
     - keypress arrow
-    - move tile. 100% increments. update left top on element
-    - move multiple tiles along the same path
-    - move with transition
     - check if finished. fade out grid. show full image.
     - options toggle. svg icon. semitransparent layer
     - background image as base64 string?
@@ -180,8 +180,11 @@ Shuffling the board without repeating the last step, and starting with the free 
 
 Whenever a tile is clicked, it is moved in the direction of the free space, as long as the free space is on the same horizontal or vertical axis. The markup for the tiles will be generated whenever the grid changes. Any event handlers attached must then be re-attached. I don't want that. Maybe it's better to promote the click event to one of the parent containers, and only take action if a tile is clicked. The board container seems like a good candidate.
 
-The click event gives us e.clientX and e.clientY, which makes it possible to calculate which tile coordinate is clicked. This coordinate is relative to the upper left corner of the viewport, so it needs to be translated intro something useful.
+The click event gives us e.clientX and e.clientY, which makes it possible to calculate which tile coordinate is clicked. This coordinate is relative to the upper left corner of the viewport, so it needs to be translated into something useful. I already maintain `state.ratioLeft` and `state.ratioTop`.
 
+Tiles can be nmoved only if it is on the same axis as the free space. So we need to find that out first. Move tiles to free space until we've reached the clicked position.
+
+Adding a 0.2s transition on left + top
 
 ## October 11th
 ## October 12th

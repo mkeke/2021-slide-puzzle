@@ -137,17 +137,18 @@ const dom = {
     },
 
     handleClick: function(e) {
+        // make coordinates relative to board upper left
         // TODO remove magic numbers
         let x = e.clientX - state.ratioLeft - 12;
         let y = e.clientY - state.ratioTop - 12;
+
         if (state.gameOn && x >= 0 && y >= 0) {
             x = Math.floor(x / state.tileSize);
             y = Math.floor(y / state.tileSize);
-            log(x+","+y);
-        } else {
-            log("outside board or game not on");
-        }
 
-        /**/
+            board.move(x, y);
+        } else {
+            // outside board or game not on
+        }
     },
 };
