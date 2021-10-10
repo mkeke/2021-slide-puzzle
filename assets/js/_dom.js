@@ -26,6 +26,8 @@ const dom = {
         // handle viewport size change
         this.handleResize();
         window.onresize = this.handleResize.bind(this);
+
+        dom.boardWrapper.addEventListener("click", this.handleClick.bind(this));
     },
 
     /*
@@ -83,7 +85,8 @@ const dom = {
         state.ratioLeft = Math.floor((window.innerWidth - state.ratioWidth) / 2);
         state.ratioTop = Math.floor((window.innerHeight - state.ratioHeight) / 10);
 
-        log(`board: ${state.tileSize * state.grid}x${state.tileSize * state.grid}`);
+        log(`board:${state.tileSize*state.grid}x${state.tileSize*state.grid}` +
+                ` tile:${state.tileSize}x${state.tileSize}`);
     },
 
     /*
@@ -121,11 +124,30 @@ const dom = {
         let str = "";
         for(let x=0; x<state.grid; x++) {
             for(let y=0; y<state.grid; y++) {
-                if(!(x==state.grid-1 && y==state.grid-1)) {
-                    str += `<li class="x${x} y${y}"><div></div></li>`;
+                let el = board.tiles[y][x];
+                if(el !== false) {
+                    // draw
+                    str += `<li class="x${el.x} y${el.y}"`;
+                    str += ` style="left:${x*100}%; top:${y*100}%;"`;
+                    str += `><div></div></li>`;
                 }
             }
         }
         dom.board.innerHTML = str;
-    }
+    },
+
+    handleClick: function(e) {
+        // TODO remove magic numbers
+        let x = e.clientX - state.ratioLeft - 12;
+        let y = e.clientY - state.ratioTop - 12;
+        if (state.gameOn && x >= 0 && y >= 0) {
+            x = Math.floor(x / state.tileSize);
+            y = Math.floor(y / state.tileSize);
+            log(x+","+y);
+        } else {
+            log("outside board or game not on");
+        }
+
+        /**/
+    },
 };

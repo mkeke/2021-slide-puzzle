@@ -12,14 +12,22 @@ const state = {
     ratioLeft: undefined,
     ratioTop: undefined,
 
+    gameOn: undefined,
+
     init: function() {
         // setting default grid
         this.grid = conf.defaultGrid;
+        this.gameOn = false;
     },
 
     newGame: function() {
+        // initialize internal tiles
+        board.init();
+
+        this.gameOn = true;
+
         // generate tiles for this grid
-        dom.generateTileGrid();
+        // dom.generateTileGrid();
         // assign image
     },
 };

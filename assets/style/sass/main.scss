@@ -37,16 +37,24 @@ body {
     position: relative;
     border: 2px solid yellow;
 
-    // width and height is maintained by javascript
+    // width and height is updated runtime
 }
 
 .tiles {
     position: relative;
     overflow: visible;
+
+    // width and height is updated runtime
+    // size of container is same as one tile
+
     li {
         width: 100%;
         height: 100%;
         overflow: hidden;
+        position: absolute;
+
+        // left + top is updated runtime on each tile
+
         &:after {
             position: absolute;
             content: '';
@@ -62,6 +70,7 @@ body {
         }
 
         div {
+
             // width and height is updated runtime
 
             background-image: url("assets/images/ricky.jpg");
@@ -73,26 +82,12 @@ body {
             position: absolute;
         }
 
-        &.x0 div { left: 0; }
-        &.x1 div { left: -100%; }
-        &.x2 div { left: -200%; }
-        &.x3 div { left: -300%; }
-        &.y0 div { top: 0; }
-        &.y1 div { top: -100%; }
-        &.y2 div { top: -200%; }
-        &.y3 div { top: -300%; }
+        // position of inner div holding the background image
 
-        position: absolute;
-        // test positions
-        &.x0 { left: 0; }
-        &.x1 { left: 100%; }
-        &.x2 { left: 200%; }
-        &.x3 { left: 300%; }
-        &.y0 { top: 0; }
-        &.y1 { top: 100%; }
-        &.y2 { top: 200%; }
-        &.y3 { top: 300%; }
-
+        @for $i from 0 through 7 {
+            &.x#{$i} div { left: #{$i * -100%}; }
+            &.y#{$i} div { top: #{$i * -100%}; }
+        }
     }
 }
 /*
