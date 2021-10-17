@@ -27,7 +27,8 @@ const dom = {
         this.handleResize();
         window.onresize = this.handleResize.bind(this);
 
-        dom.boardWrapper.addEventListener("click", this.handleClick.bind(this));
+        dom.boardWrapper.addEventListener("mousedown", this.handleClick.bind(this));
+        // TODO touch move
     },
 
     /*
@@ -121,19 +122,29 @@ const dom = {
     },
 
     generateTileGrid: function() {
-        let str = "";
-        for(let x=0; x<state.grid; x++) {
-            for(let y=0; y<state.grid; y++) {
-                let el = board.tiles[y][x];
-                if(el !== false) {
-                    // draw
-                    str += `<li class="x${el.x} y${el.y}"`;
-                    str += ` style="left:${x*100}%; top:${y*100}%;"`;
-                    str += `><div></div></li>`;
+        for(let y=0; y<state.grid; y++) {
+            for(let x=0; x<state.grid; x++) {
+                let tile = board.tiles[y][x];
+                if(tile !== false) {
+
+                    // create tile DOM element
+                    let li = document.createElement("li");
+                    let div = document.createElement("div");
+                    li.appendChild(div);
+
+                    // assign correct attributes
+                    li.className = `x${tile.ox} y${tile.oy}`;
+                    li.style["left"] = `${x*100}%`;
+                    li.style["top"] = `${y*100}%`;
+
+                    // store internally
+                    board.tiles[y][x].el = li;
+
+                    // append to DOM
+                    this.board.appendChild(li);
                 }
             }
         }
-        dom.board.innerHTML = str;
     },
 
     handleClick: function(e) {
@@ -142,10 +153,9 @@ const dom = {
         let x = e.clientX - state.ratioLeft - 12;
         let y = e.clientY - state.ratioTop - 12;
 
-        if (state.gameOn && x >= 0 && y >= 0) {
+        if (state.gameOn && !state.busy && x >= 0 && y >= 0) {
             x = Math.floor(x / state.tileSize);
             y = Math.floor(y / state.tileSize);
-
             board.move(x, y);
         } else {
             // outside board or game not on

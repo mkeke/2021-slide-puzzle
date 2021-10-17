@@ -81,6 +81,7 @@ Making a list of what to do and in what order. More tasks might be added through
     v move tile. 100% increments. update left top on element
     v move multiple tiles along the same path
     v move with transition
+    v state.busy when tiles transition
     - keypress arrow
     - check if finished. fade out grid. show full image.
     - options toggle. svg icon. semitransparent layer
@@ -192,7 +193,18 @@ Adding a 0.2s transition on left + top
 ## October 14th
 ## October 15th
 ## October 16th
+
+All work and no play.
+I am confused by my own code, and need to refactor things related to building the tiles, and maintaining the state of the board.
+
+board.tiles[y][x] gives info about the tile currently in that position. tile has { ox: <int>, oy: <int>, el: <el> } describing where the tile belongs. I need the element, so I don't have to search the DOM every time the user click a tile.
+
+Before moving tiles, state.busy must be true. After the tiles have finished moving, state.busy is set to false again. This prevents the user from moving tiles off the board
+
 ## October 17th
+
+Refactor of transitionEnd event handler and state.busy.
+
 ## October 18th
 ## October 19th
 ## October 20th

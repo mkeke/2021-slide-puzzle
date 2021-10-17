@@ -5,12 +5,12 @@
 */
 const board = {
     // 2d array representing the current state of the tiles
-    tiles: undefined,
-    space: undefined,
+    tiles: undefined, // [y][x] = { ox:<int>, oy:<int>, el: <el> }
+    space: undefined, // { x:<int>, y:<int> }
 
     init: function() {
         this.initTiles();
-        log(this.tiles);
+  //      log(this.tiles);
         this.shuffle();
         dom.generateTileGrid();
     },
@@ -24,11 +24,12 @@ const board = {
                     // bottom right is empty space
                     this.tiles[y].push(false);
                 } else {
-                    // push the correct coordinates
-                    this.tiles[y].push({x:x, y:y});
+                    // push the correct origin coordinates
+                    this.tiles[y].push({ox:x, oy:y});
                 }
             }
         }
+        // space is bottom right
         this.space = {x: state.grid-1, y: state.grid-1};
     },
 
@@ -38,23 +39,22 @@ const board = {
         for(let i=0; i<100; i++) {
 
             // get possible moves
-            let moves = [];
-            this.space.x > 0 && moves.push({x:this.space.x-1, y:this.space.y});
-            this.space.x < state.grid-1 && moves.push({x:this.space.x+1, y:this.space.y});
-            this.space.y > 0 && moves.push({x:this.space.x, y:this.space.y-1});
-            this.space.y < state.grid-1 && moves.push({x:this.space.x, y:this.space.y+1});
+            let moves = []; // { mx:<int>, my:<int> }
+            this.space.x > 0 && moves.push({mx:this.space.x-1, my:this.space.y});
+            this.space.x < state.grid-1 && moves.push({mx:this.space.x+1, my:this.space.y});
+            this.space.y > 0 && moves.push({mx:this.space.x, my:this.space.y-1});
+            this.space.y < state.grid-1 && moves.push({mx:this.space.x, my:this.space.y+1});
 
             // filter out last space position to avoid reversing the shuffle
-            moves = moves.filter(el => !(el.x === lastSpace.x && el.y === lastSpace.y));
+            moves = moves.filter(el => !(el.mx === lastSpace.x && el.my === lastSpace.y));
 
             // select a random direction based on the available
             let dir = Math.floor(Math.random()*moves.length);
 
             // do the swap
             lastSpace = {...this.space};
-            this.swap(moves[dir].x, moves[dir].y);
+            this.swap(moves[dir].mx, moves[dir].my);
         }
-
         // move space to the upper left corner
         while(this.space.x > 0) {
             this.swap(this.space.x-1, this.space.y);
@@ -69,19 +69,23 @@ const board = {
         // update space coordinate
         // update empty coordinate in board tiles
 
-        log(`swap [${x},${y}] <--> [${this.space.x},${this.space.y}]`);
+//        log(`swap [${x},${y}] <--> [${this.space.x},${this.space.y}]`);
 
-        this.tiles[this.space.y][this.space.x] = this.tiles[y][x];
+        this.tiles[this.space.y][this.space.x] = {...this.tiles[y][x]};
         this.space = {x:x, y:y};
         this.tiles[y][x] = false;
     },
 
     move: function(x, y) {
         // move the tile on the specified coordinate towards the space tile
-        // return array of affected coordinates
+
+        if(this.tiles[y][x] === false) {
+            return;
+        }
+
+        // determine the direction to move in
         let xDir = 0;
         let yDir = 0;
-
         if(x == board.space.x) {
             yDir = y > board.space.y ? 1 : -1;
         }
@@ -90,17 +94,32 @@ const board = {
         }
 
         if(Math.abs(xDir) + Math.abs(yDir) > 0) {
-            log("ok to move in " + xDir + "," + yDir);
+
+            // mark state as busy to ignore input during move
+            state.busy = true;
+
+            // add transition end event handler on tile at x,y
+            // this is the last tile to be moved
+            this.tempel = this.tiles[y][x].el;
+            this.tempfu = this.moveReady.bind(this);
+            this.tempel.addEventListener(state.trend, this.tempfu);
+
             do {
                 this.swap(this.space.x + xDir, this.space.y + yDir);
 
-                // update left top on element
-                let el = dom.board.find(`.x${this.tiles[this.space.y - yDir][this.space.x - xDir].x}.y${this.tiles[this.space.y - yDir][this.space.x - xDir].y}`);
+                let el = this.tiles[this.space.y - yDir][this.space.x - xDir].el;
                 el.style["left"] = (this.space.x - xDir) * 100 + "%";
                 el.style["top"] = (this.space.y - yDir) * 100 + "%";
 
             } while (!(this.space.x==x && this.space.y == y));
         }
+    },
 
+    moveReady: function() {
+        log("move ready");
+        this.tempel.removeEventListener(state.trend, this.tempfu);
+
+        // ok to capture tile clicks
+        state.busy = false;
     }
 };
