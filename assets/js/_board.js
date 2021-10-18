@@ -79,6 +79,11 @@ const board = {
     move: function(x, y) {
         // move the tile on the specified coordinate towards the space tile
 
+        // verify input values
+        if(x<0 || x>=state.grid || y<0 || y>=state.grid) {
+            return;
+        }
+
         if(this.tiles[y][x] === false) {
             return;
         }
@@ -116,10 +121,26 @@ const board = {
     },
 
     moveReady: function() {
-        log("move ready");
         this.tempel.removeEventListener(state.trend, this.tempfu);
 
-        // ok to capture tile clicks
-        state.busy = false;
+        if(this.isComplete()) {
+            // the end
+            dom.revealImage();
+        } else {
+            state.busy = false;
+        }
+    },
+
+    isComplete: function() {
+        for(let y=0; y<state.grid; y++) {
+            for(let x=0; x<state.grid; x++) {
+                if(!(x == state.grid-1 && y == state.grid-1)) {
+                    if(this.tiles[y][x].ox !== x || this.tiles[y][x].oy !== y) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 };

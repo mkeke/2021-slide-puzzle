@@ -27,8 +27,63 @@ const dom = {
         this.handleResize();
         window.onresize = this.handleResize.bind(this);
 
-        dom.boardWrapper.addEventListener("mousedown", this.handleClick.bind(this));
-        // TODO touch move
+        this.handleKeyboardEvents();
+        this.handleMouseEvents();
+        if(navigator.maxTouchPoints > 0) {
+            this.handleTouchEvents();
+        }
+    },
+
+    handleKeyboardEvents: function() {
+        window.addEventListener("keydown", function(e){
+
+            // handle first occurrence of key, ignore key repeat
+            if(!state.busy && !e.repeat) {
+                switch(e.keyCode) {
+                    case def.keyUp:
+                        board.move(board.space.x, board.space.y + 1);
+                        break;
+                    case def.keyDown:
+                        board.move(board.space.x, board.space.y - 1);
+                        break;
+                    case def.keyLeft:
+                        board.move(board.space.x + 1, board.space.y);
+                        break;
+                    case def.keyRight:
+                        board.move(board.space.x - 1, board.space.y);
+                        break;
+                }
+            }
+
+        }.bind(this));
+    },
+
+    handleMouseEvents: function() {
+        dom.boardWrapper.addEventListener("mousedown", function(e){
+            // make coordinates relative to board upper left
+            // TODO remove magic numbers
+            let x = e.clientX - state.ratioLeft - 12;
+            let y = e.clientY - state.ratioTop - 12;
+
+            if (state.gameOn && !state.busy && x >= 0 && y >= 0) {
+                x = Math.floor(x / state.tileSize);
+                y = Math.floor(y / state.tileSize);
+                board.move(x, y);
+            }
+        }.bind(this));
+    },
+
+    handleTouchEvents: function() {
+        dom.boardWrapper.addEventListener("touchstart", function(e){
+            let x = e.targetTouches[0].clientX - state.ratioLeft - 10;
+            let y = e.targetTouches[0].clientY - state.ratioTop - 10;
+
+            if (state.gameOn && !state.busy && x >= 0 && y >= 0) {
+                x = Math.floor(x / state.tileSize);
+                y = Math.floor(y / state.tileSize);
+                board.move(x, y);
+            }
+        }.bind(this));
     },
 
     /*
@@ -147,18 +202,10 @@ const dom = {
         }
     },
 
-    handleClick: function(e) {
-        // make coordinates relative to board upper left
-        // TODO remove magic numbers
-        let x = e.clientX - state.ratioLeft - 12;
-        let y = e.clientY - state.ratioTop - 12;
-
-        if (state.gameOn && !state.busy && x >= 0 && y >= 0) {
-            x = Math.floor(x / state.tileSize);
-            y = Math.floor(y / state.tileSize);
-            board.move(x, y);
-        } else {
-            // outside board or game not on
-        }
+    revealImage: function() {
+        // puzzle is complete
+        // fade in full image
+        // fade out grid lines
+        this.boardWrapper.addClass("complete");        
     },
 };

@@ -82,8 +82,10 @@ Making a list of what to do and in what order. More tasks might be added through
     v move multiple tiles along the same path
     v move with transition
     v state.busy when tiles transition
-    - keypress arrow
-    - check if finished. fade out grid. show full image.
+    v keypress arrow
+    v touch handler
+    v check if finished
+    v finished: fade out grid. show full image.
     - options toggle. svg icon. semitransparent layer
     - background image as base64 string?
         - only if custom image. runtime-image style section + state flag
@@ -206,6 +208,16 @@ Before moving tiles, state.busy must be true. After the tiles have finished movi
 Refactor of transitionEnd event handler and state.busy.
 
 ## October 18th
+
+Adding more events to move the tiles. keypress, touchstart
+
+check if puzzle is complete
+    - check if finished.
+    - fade out grid.
+    - show full image.
+
+https://lysebo.xyz/games/slidepuzzle/20211018
+
 ## October 19th
 ## October 20th
 ## October 21st

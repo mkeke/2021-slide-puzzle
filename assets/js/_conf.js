@@ -9,7 +9,7 @@ const conf = {
     maxWidth: 800,
 
     grids: [3, 4, 5, 6],
-    defaultGrid: 4,
+    defaultGrid: 3,
 
     // define white space on each side of the board
     hSpace: 10 + 2 + 2 + 10, // padding + border
