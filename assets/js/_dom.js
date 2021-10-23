@@ -10,6 +10,9 @@ const dom = {
     ratio: null,
     boardWrapper: null,
     board: null,
+    options: null,
+    optionsButton: null,
+    gridButtons: null,
 
     init: function() {
         log("dom.init()");
@@ -22,6 +25,9 @@ const dom = {
         this.ratio = this.parent.find(".ratio");
         this.boardWrapper = this.parent.find("section.board");
         this.board = this.parent.find("section.board .tiles");
+        this.options = this.parent.find("section.options");
+        this.optionsButton = this.parent.find("a.options");
+        this.gridButtons = this.options.find(".grid");
 
         // handle viewport size change
         this.handleResize();
@@ -32,13 +38,33 @@ const dom = {
         if(navigator.maxTouchPoints > 0) {
             this.handleTouchEvents();
         }
+
+        this.handleOptionsToggle();
+        this.handleGridSelect();
+    },
+
+    handleGridSelect: function() {
+        this.gridButtons.addEventListener("click", function(e){
+            e.preventDefault();
+            let size = parseInt(e.target.getAttribute("data-num"));
+            log("grid " + size);
+        }.bind(this));
+    },
+
+    handleOptionsToggle: function() {
+        this.optionsButton.addEventListener("click", function(e){
+            e.preventDefault();
+            this.options.toggleClass("visible");
+            // disable game interaction
+            state.gameOn = !state.gameOn;
+        }.bind(this));
     },
 
     handleKeyboardEvents: function() {
         window.addEventListener("keydown", function(e){
 
             // handle first occurrence of key, ignore key repeat
-            if(!state.busy && !e.repeat) {
+            if(state.gameOn && !state.busy && !e.repeat) {
                 switch(e.keyCode) {
                     case def.keyUp:
                         board.move(board.space.x, board.space.y + 1);

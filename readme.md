@@ -86,10 +86,8 @@ Making a list of what to do and in what order. More tasks might be added through
     v touch handler
     v check if finished
     v finished: fade out grid. show full image.
-    - options toggle. svg icon. semitransparent layer
-    - background image as base64 string?
-        - only if custom image. runtime-image style section + state flag
-    - options pane with icons
+    v options toggle. svg icon. semitransparent layer
+    v options pane with icons
     - select new game grid
         - restart game
         - recalc sizes
@@ -98,8 +96,11 @@ Making a list of what to do and in what order. More tasks might be added through
     - grid icons 4x4 5x5 6x6 ..
     - restart game (icon). keep image
     - random image, restart
+    - background image as base64 string?
+        - only if custom image. runtime-image style section + state flag
     - drag-drop, restart
     - upload image, restart
+    - mobile: take photo
     - create google/facebook meta tags. remember correct image ratio
     - upload game to server
     - link to github
@@ -218,11 +219,20 @@ check if puzzle is complete
 
 https://lysebo.xyz/games/slidepuzzle/20211018
 
+
+
 ## October 19th
 ## October 20th
 ## October 21st
 ## October 22nd
 ## October 23rd
+
+Creating a gear svg to serve as an options toggle. I have reserved 30px for the height of the gear. So how do one construct the perfect gear symbol? Drawing some examples to find the proper form. (IMAGE) Using the same knob path and rotating it 9 times around the origo. Using a mask to get a transparent center.
+
+creating a section for options. clicking on the gear toggles the visibility. When the section is visible, state.gameOn is true, disabling all game related interactions.
+
+Being hung up on SVGs I might start with creating icons for changing grids. 3, 4, 5, 6, 7 tiles in either direction. Background color is green for the easiest grid and red for the hardest grid. Up next is to reset the grid, and reset the game, when the user clicks a grid.
+
 ## October 24th
 ## October 25th
 ## October 26th
