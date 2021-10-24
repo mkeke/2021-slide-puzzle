@@ -193,8 +193,6 @@ Tiles can be nmoved only if it is on the same axis as the free space. So we need
 
 Adding a 0.2s transition on left + top
 
-<img src="screenshots/05-bgimage.png" />
-
 ## October 11th
 ## October 12th
 ## October 13th
@@ -234,7 +232,7 @@ https://lysebo.xyz/games/slidepuzzle/20211018
 
 Creating a gear svg to serve as an options toggle. I have reserved 30px for the height of the gear. So how do one construct the perfect gear symbol? Drawing some examples to find the proper form. Using the same knob path and rotating it 9 times around the origo. Using a mask to get a transparent center. Nice!
 
-<img src="screenshots/06-gear-knobs.png" />
+<img src="screenshots/06-gear-knobs.jpg" />
 
 <img src="screenshots/07-gear-svg.png" />
 
