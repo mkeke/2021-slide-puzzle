@@ -34,6 +34,8 @@ const state = {
         // initialize internal tiles
         board.init();
 
+        dom.unrevealImage();
+        
         this.gameOn = true;
         this.busy = false;
 

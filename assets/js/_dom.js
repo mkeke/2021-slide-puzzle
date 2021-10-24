@@ -13,6 +13,7 @@ const dom = {
     options: null,
     optionsButton: null,
     gridButtons: null,
+    restartButton: null,
 
     init: function() {
         log("dom.init()");
@@ -28,6 +29,10 @@ const dom = {
         this.options = this.parent.find("section.options");
         this.optionsButton = this.parent.find("a.options");
         this.gridButtons = this.options.find(".grid");
+        this.restartButton = this.options.find(".restart");
+
+        // update active config buttons
+        this.updateConfigButtons();
 
         // handle viewport size change
         this.handleResize();
@@ -41,13 +46,34 @@ const dom = {
 
         this.handleOptionsToggle();
         this.handleGridSelect();
+        this.handleRestartClick();
+    },
+
+    handleRestartClick: function() {
+        this.restartButton.addEventListener("click", function(e){
+            e.preventDefault();
+            state.newGame();
+            this.options.removeClass("visible");
+            state.gameOn = true;
+        }.bind(this));
+    },
+
+    updateConfigButtons: function() {
+        this.gridButtons.removeClass("active");
+        this.gridButtons[state.grid-3].addClass("active");
     },
 
     handleGridSelect: function() {
         this.gridButtons.addEventListener("click", function(e){
             e.preventDefault();
             let size = parseInt(e.target.getAttribute("data-num"));
-            log("grid " + size);
+            if (size !== state.grid) {
+                // new grid is selected
+                state.grid = size;
+                this.handleResize();
+                state.newGame();
+                this.updateConfigButtons();
+            }
         }.bind(this));
     },
 
@@ -56,7 +82,7 @@ const dom = {
             e.preventDefault();
             this.options.toggleClass("visible");
             // disable game interaction
-            state.gameOn = !state.gameOn;
+            state.gameOn = !this.options.hasClass("visible");
         }.bind(this));
     },
 
@@ -203,6 +229,7 @@ const dom = {
     },
 
     generateTileGrid: function() {
+        this.board.innerHTML = "";
         for(let y=0; y<state.grid; y++) {
             for(let x=0; x<state.grid; x++) {
                 let tile = board.tiles[y][x];
@@ -232,6 +259,9 @@ const dom = {
         // puzzle is complete
         // fade in full image
         // fade out grid lines
-        this.boardWrapper.addClass("complete");        
+        this.boardWrapper.addClass("complete");
+    },
+    unrevealImage: function() {
+        this.boardWrapper.removeClass("complete");
     },
 };

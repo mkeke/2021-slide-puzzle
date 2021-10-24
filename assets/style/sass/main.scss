@@ -177,99 +177,123 @@ section.options {
     width: 100%;
     height: 100%;
     background-color: #000000cc;
+}
 
-    button {
-        display: inline-block;
-        vertical-align: top;
-        width: 20%;
-        height: 0;
-        padding-bottom: 20%;
-        background-color: transparent;
-        outline: none;
-        border: none;
+/*
+    options buttons
+*/
+section.options button {
+    display: inline-block;
+    vertical-align: top;
+    width: 20%;
+    height: 0;
+    padding-bottom: 20%;
+    background-color: transparent;
+    outline: none;
+    border: none;
 
-        $gridColor: #ffffff80;
-        &.g3 {
-            $svg: (
-                '<rect x="5" y="5" width="90" height="90" fill="#00ff0050" />'
-                '<g stroke="#{$gridColor}" stroke-width="1" fill="none">'
-                '<path d="M33.3,5 v90" />'
-                '<path d="M66.7,5 v90" />'
-                '<path d="M5,33.3 h90" />'
-                '<path d="M5,66.7 h90" />'
-                '</g>'
-            );
-            @include svg($svg, 0, 0, 100, 100);
-        }
-        &.g4 {
-            $svg: (
-                '<rect x="5" y="5" width="90" height="90" fill="#80ff0050" />'
-                '<g stroke="#{$gridColor}" stroke-width="1" fill="none">'
-                '<path d="M25,5 v90" />'
-                '<path d="M50,5 v90" />'
-                '<path d="M75,5 v90" />'
-                '<path d="M5,25 h90" />'
-                '<path d="M5,50 h90" />'
-                '<path d="M5,75 h90" />'
-                '</g>'
-            );
-            @include svg($svg, 0, 0, 100, 100);
-        }
-        &.g5 {
-            $svg: (
-                '<rect x="5" y="5" width="90" height="90" fill="#ffff0050" />'
-                '<g stroke="#{$gridColor}" stroke-width="1" fill="none">'
-                '<path d="M20,5 v90" />'
-                '<path d="M40,5 v90" />'
-                '<path d="M60,5 v90" />'
-                '<path d="M80,5 v90" />'
-                '<path d="M5,20 h90" />'
-                '<path d="M5,40 h90" />'
-                '<path d="M5,60 h90" />'
-                '<path d="M5,80 h90" />'
-                '</g>'
-            );
-            @include svg($svg, 0, 0, 100, 100);
-        }
-        &.g6 {
-            $svg: (
-                '<rect x="5" y="5" width="90" height="90" fill="#ff800050" />'
-                '<g stroke="#{$gridColor}" stroke-width="1" fill="none">'
-                '<path d="M16.7,5 v90" />'
-                '<path d="M33.3,5 v90" />'
-                '<path d="M50,5 v90" />'
-                '<path d="M66.7,5 v90" />'
-                '<path d="M83.3,5 v90" />'
-                '<path d="M5,16.7 h90" />'
-                '<path d="M5,33.3 h90" />'
-                '<path d="M5,50 h90" />'
-                '<path d="M5,66.7 h90" />'
-                '<path d="M5,83.3 h90" />'
-                '</g>'
-            );
-            @include svg($svg, 0, 0, 100, 100);
-        }
-        &.g7 {
-            $svg: (
-                '<rect x="5" y="5" width="90" height="90" fill="#ff000050" />'
-                '<g stroke="#{$gridColor}" stroke-width="1" fill="none">'
-                '<path d="M14.3,5 v90" />'
-                '<path d="M28.6,5 v90" />'
-                '<path d="M42.9,5 v90" />'
-                '<path d="M57.1,5 v90" />'
-                '<path d="M71.4,5 v90" />'
-                '<path d="M85.7,5 v90" />'
-                '<path d="M5,14.3 h90" />'
-                '<path d="M5,28.6 h90" />'
-                '<path d="M5,42.9 h90" />'
-                '<path d="M5,57.1 h90" />'
-                '<path d="M5,71.4 h90" />'
-                '<path d="M5,85.7 h90" />'
-                '</g>'
-            );
-            @include svg($svg, 0, 0, 100, 100);
-        }
+    &.active, &:hover {
+        background-color: #ffffff80;
     }
+}
+
+/*
+    grid buttons
+*/
+section.options button.grid {
+    &.g3 {
+        $svg: (
+            '<rect x="5" y="5" width="90" height="90" fill="#00000080" stroke="none" />'
+            '<g stroke="#00ff00" stroke-width="2" fill="none">'
+            '<path d="M33.3,5 v90" />'
+            '<path d="M66.7,5 v90" />'
+            '<path d="M5,33.3 h90" />'
+            '<path d="M5,66.7 h90" />'
+            '</g>'
+        );
+        @include svg($svg, 0, 0, 100, 100);
+    }
+    &.g4 {
+        $svg: (
+            '<rect x="5" y="5" width="90" height="90" fill="#00000080" stroke="none" />'
+            '<g stroke="#80ff00" stroke-width="2" fill="none">'
+            '<path d="M25,5 v90" />'
+            '<path d="M50,5 v90" />'
+            '<path d="M75,5 v90" />'
+            '<path d="M5,25 h90" />'
+            '<path d="M5,50 h90" />'
+            '<path d="M5,75 h90" />'
+            '</g>'
+        );
+        @include svg($svg, 0, 0, 100, 100);
+    }
+    &.g5 {
+        $svg: (
+            '<rect x="5" y="5" width="90" height="90" fill="#00000080" stroke="none" />'
+            '<g stroke="#ffff00" stroke-width="2" fill="none">'
+            '<path d="M20,5 v90" />'
+            '<path d="M40,5 v90" />'
+            '<path d="M60,5 v90" />'
+            '<path d="M80,5 v90" />'
+            '<path d="M5,20 h90" />'
+            '<path d="M5,40 h90" />'
+            '<path d="M5,60 h90" />'
+            '<path d="M5,80 h90" />'
+            '</g>'
+        );
+        @include svg($svg, 0, 0, 100, 100);
+    }
+    &.g6 {
+        $svg: (
+            '<rect x="5" y="5" width="90" height="90" fill="#00000080" stroke="none" />'
+            '<g stroke="#ff8000" stroke-width="2" fill="none">'
+            '<path d="M16.7,5 v90" />'
+            '<path d="M33.3,5 v90" />'
+            '<path d="M50,5 v90" />'
+            '<path d="M66.7,5 v90" />'
+            '<path d="M83.3,5 v90" />'
+            '<path d="M5,16.7 h90" />'
+            '<path d="M5,33.3 h90" />'
+            '<path d="M5,50 h90" />'
+            '<path d="M5,66.7 h90" />'
+            '<path d="M5,83.3 h90" />'
+            '</g>'
+        );
+        @include svg($svg, 0, 0, 100, 100);
+    }
+    &.g7 {
+        $svg: (
+            '<rect x="5" y="5" width="90" height="90" fill="#00000080" stroke="none" />'
+            '<g stroke="#ff0000" stroke-width="2" fill="none">'
+            '<path d="M14.3,5 v90" />'
+            '<path d="M28.6,5 v90" />'
+            '<path d="M42.9,5 v90" />'
+            '<path d="M57.1,5 v90" />'
+            '<path d="M71.4,5 v90" />'
+            '<path d="M85.7,5 v90" />'
+            '<path d="M5,14.3 h90" />'
+            '<path d="M5,28.6 h90" />'
+            '<path d="M5,42.9 h90" />'
+            '<path d="M5,57.1 h90" />'
+            '<path d="M5,71.4 h90" />'
+            '<path d="M5,85.7 h90" />'
+            '</g>'
+        );
+        @include svg($svg, 0, 0, 100, 100);
+    }
+}
+
+/*
+    restart button
+*/
+section.options button.restart {
+    $svg: (
+        '<rect x="5" y="5" width="90" height="90" fill="#00000080" stroke="none" />'
+        '<g stroke="none" fill="yellow" transform="rotate(45 50 50)" >'
+        '<path d="M50,15 v -10 l 15,15 l -15,15 v -10 A 25,25 0 1 0 75,50 h10 A 35,35 0 1 1 50,15 Z" />'
+        '</g>'
+    );
+    @include svg($svg, 0, 0, 100, 100);
 }
 
 // image

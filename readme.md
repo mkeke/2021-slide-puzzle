@@ -88,14 +88,17 @@ Making a list of what to do and in what order. More tasks might be added through
     v finished: fade out grid. show full image.
     v options toggle. svg icon. semitransparent layer
     v options pane with icons
-    - select new game grid
-        - restart game
-        - recalc sizes
-        - reset runtime css
-        - keep current image
-    - grid icons 4x4 5x5 6x6 ..
-    - restart game (icon). keep image
-    - random image, restart
+    v grid icons 4x4 5x5 6x6 ..
+    v select new game grid
+        v restart game
+        v recalc sizes
+        v reset runtime css
+        v keep current image
+    v restart game (icon). keep image. keep grid
+    - random image, restart, predefined in css
+        - svg questionmark
+        - custom image overrides predefined image
+        - custom image is stored in ruintime css
     - background image as base64 string?
         - only if custom image. runtime-image style section + state flag
     - drag-drop, restart
@@ -190,6 +193,8 @@ Tiles can be nmoved only if it is on the same axis as the free space. So we need
 
 Adding a 0.2s transition on left + top
 
+<img src="screenshots/05-bgimage.png" />
+
 ## October 11th
 ## October 12th
 ## October 13th
@@ -227,13 +232,28 @@ https://lysebo.xyz/games/slidepuzzle/20211018
 ## October 22nd
 ## October 23rd
 
-Creating a gear svg to serve as an options toggle. I have reserved 30px for the height of the gear. So how do one construct the perfect gear symbol? Drawing some examples to find the proper form. (IMAGE) Using the same knob path and rotating it 9 times around the origo. Using a mask to get a transparent center.
+Creating a gear svg to serve as an options toggle. I have reserved 30px for the height of the gear. So how do one construct the perfect gear symbol? Drawing some examples to find the proper form. Using the same knob path and rotating it 9 times around the origo. Using a mask to get a transparent center. Nice!
+
+<img src="screenshots/06-gear-knobs.png" />
+
+<img src="screenshots/07-gear-svg.png" />
+
+<img src="screenshots/08-gear-svg.png" />
+
+<img src="screenshots/09-gear-svg.png" />
+
 
 creating a section for options. clicking on the gear toggles the visibility. When the section is visible, state.gameOn is true, disabling all game related interactions.
 
 Being hung up on SVGs I might start with creating icons for changing grids. 3, 4, 5, 6, 7 tiles in either direction. Background color is green for the easiest grid and red for the hardest grid. Up next is to reset the grid, and reset the game, when the user clicks a grid.
 
 ## October 24th
+
+clicking on a grid option resets the game, keeping the current image.
+
+Creating a restart icon. Clicking on it resets the current game, keeping the grid and image.
+
+
 ## October 25th
 ## October 26th
 ## October 27th
