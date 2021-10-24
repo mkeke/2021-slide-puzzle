@@ -255,6 +255,8 @@ Creating a restart icon. Clicking on it resets the current game, keeping the gri
 
 Creating a shuffle icon and ading it to the options pane. Adding more images, assigning them to different board classes (i0, i1, i2, ...) and creating conf.numImages (int) to help select a proper random value.
 
+https://lysebo.xyz/games/slidepuzzle/20211024/
+
 ## October 25th
 ## October 26th
 ## October 27th
