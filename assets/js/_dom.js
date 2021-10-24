@@ -30,6 +30,7 @@ const dom = {
         this.optionsButton = this.parent.find("a.options");
         this.gridButtons = this.options.find(".grid");
         this.restartButton = this.options.find(".restart");
+        this.shuffleButton = this.options.find(".shuffle");
 
         // update active config buttons
         this.updateConfigButtons();
@@ -47,6 +48,21 @@ const dom = {
         this.handleOptionsToggle();
         this.handleGridSelect();
         this.handleRestartClick();
+        this.handleShuffleClick();
+    },
+
+    shuffleImage: function() {
+        this.boardWrapper.className = "board i" + Math.floor(Math.random()*conf.numImages);
+    },
+
+    handleShuffleClick: function() {
+        this.shuffleButton.addEventListener("click", function(e){
+            e.preventDefault();
+            state.newGame();
+            this.shuffleImage();
+            this.options.removeClass("visible");
+            state.gameOn = true;
+        }.bind(this));
     },
 
     handleRestartClick: function() {

@@ -6,6 +6,7 @@ const master = {
         def.init();
 
         // starting a new game right away
+        dom.shuffleImage();
         state.newGame();
     },
 };

@@ -95,13 +95,15 @@ Making a list of what to do and in what order. More tasks might be added through
         v reset runtime css
         v keep current image
     v restart game (icon). keep image. keep grid
-    - random image, restart, predefined in css
-        - svg questionmark
-        - custom image overrides predefined image
-        - custom image is stored in ruintime css
+    v shuffle image
+        v svg shuffle icon
+        v add misc pictures
+        v set random image
+        v restart game
     - background image as base64 string?
         - only if custom image. runtime-image style section + state flag
     - drag-drop, restart
+    - custom image overrides predefined image
     - upload image, restart
     - mobile: take photo
     - create google/facebook meta tags. remember correct image ratio
@@ -251,6 +253,7 @@ clicking on a grid option resets the game, keeping the current image.
 
 Creating a restart icon. Clicking on it resets the current game, keeping the grid and image.
 
+Creating a shuffle icon and ading it to the options pane. Adding more images, assigning them to different board classes (i0, i1, i2, ...) and creating conf.numImages (int) to help select a proper random value.
 
 ## October 25th
 ## October 26th

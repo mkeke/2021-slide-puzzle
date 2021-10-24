@@ -296,10 +296,81 @@ section.options button.restart {
     @include svg($svg, 0, 0, 100, 100);
 }
 
-// image
-.tiles li div, .board:before {
-    background-image: url("assets/images/ricky.jpg");
-    // background-image: url("assets/images/tunnel.jpg");
+/*
+    shuffle button
+*/
+section.options button.shuffle {
+    $svg: (
+        '<rect x="5" y="5" width="90" height="90" fill="#00000080" stroke="none" />'
+        '<g stroke="none" fill="#ffff00">'
+        '<path d="M10,25 h20 l40,40 h5 v-10 l15,15 l-15,15 v -10 h-10 l-40,-40 h-15 Z" />'
+        '<path d="M38,52 l-13,13 h-15 v10 h20 l15.4,-15.4 Z" />'
+        '<path d="M50,40 l15.2,-15.2 h10 v-10 l15,15 l-15,15 v -10 h-5 l-13,13 Z" />'
+        '</g>'
+    );
+    @include svg($svg, 0, 0, 100, 100);
+}
+
+/*
+    default backround images
+*/
+
+.board {
+    &.i0 {
+        &:before, .tiles li div {
+            background-image: url("assets/images/xbox.jpg");
+        }
+    }
+    &.i1 {
+        &:before, .tiles li div {
+            background-image: url("assets/images/tunnel.jpg");
+        }
+    }
+    &.i2 {
+        &:before, .tiles li div {
+            background-image: url("assets/images/beer.jpg");
+        }
+    }
+    &.i3 {
+        &:before, .tiles li div {
+            background-image: url("assets/images/cow.jpg");
+        }
+    }
+    &.i4 {
+        &:before, .tiles li div {
+            background-image: url("assets/images/devil.jpg");
+        }
+    }
+    &.i5 {
+        &:before, .tiles li div {
+            background-image: url("assets/images/gears.jpg");
+        }
+    }
+    &.i6 {
+        &:before, .tiles li div {
+            background-image: url("assets/images/harbor.jpg");
+        }
+    }
+    &.i7 {
+        &:before, .tiles li div {
+            background-image: url("assets/images/raindeer.jpg");
+        }
+    }
+    &.i8 {
+        &:before, .tiles li div {
+            background-image: url("assets/images/saw.jpg");
+        }
+    }
+    &.i9 {
+        &:before, .tiles li div {
+            background-image: url("assets/images/squirrel.jpg");
+        }
+    }
+    &.i10 {
+        &:before, .tiles li div {
+            background-image: url("assets/images/ricky.jpg");
+        }
+    }
 }
 
 /*
