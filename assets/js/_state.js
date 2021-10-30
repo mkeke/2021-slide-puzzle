@@ -19,12 +19,14 @@ const state = {
     trend: null,
     anend: null,
 
+    customImage: null,
 
     init: function() {
         // setting default grid
         this.grid = conf.defaultGrid;
         this.gameOn = false;
         this.busy = true;
+        this.customImage = false;
 
         this.trend = this.whichTransitionEndEvent();
         this.anend = this.whichAnimationEndEvent();

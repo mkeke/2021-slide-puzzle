@@ -101,11 +101,11 @@ Making a list of what to do and in what order. More tasks might be added through
         v set random image
         v restart game
     v refactor options
-    - drag-drop, restart
+    v drag-drop, restart
+    v custom image overrides predefined image
+    - upload image, restart
     - background image as base64 string?
         - only if custom image. runtime-image style section + state flag
-    - custom image overrides predefined image
-    - upload image, restart
     - mobile: take photo
     - create google/facebook meta tags. remember correct image ratio
     - upload game to server
@@ -266,6 +266,10 @@ https://lysebo.xyz/games/slidepuzzle/20211024/
 ## October 30th
 
 The options pane is annoying and too complicated to use. I'm going to put the icons to the left of the gear, and let the gear toggle the visibility. Now the user can choose to have the options always visible or not. Adding a transition on opacity when toggling the visibility. Smooth af.
+
+Now, for the drag-drop.
+Adding class droppable to the parent container. When the user drags an image over the page, the background color should respond to that.
+Dropping the image, we must set it on the appropriate containers, and remove the default image class. selecting a custom image, state.customImage must be set to false again
 
 
 ## October 31st

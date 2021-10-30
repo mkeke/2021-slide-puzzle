@@ -49,10 +49,67 @@ const dom = {
         this.handleGridSelect();
         this.handleRestartClick();
         this.handleShuffleClick();
+
+        this.handleDragDrop();
+    },
+
+    setBackgroundImage: function(imageElement) {
+        state.customImage = imageElement.src;
+        this.boardWrapper.className = "board";
+        this.updateRuntimeCSS();
+        state.newGame();
+    },
+
+    handleDragDrop: function() {
+        this.parent.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.parent.addClass('dragover');
+        }.bind(this));
+
+        this.parent.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.parent.removeClass('dragover');
+        }.bind(this));
+
+        this.parent.addEventListener('drop', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.parent.removeClass('dragover');
+
+            // handle file upload
+            let image;
+            if(e.dataTransfer) {
+                image = e.dataTransfer.files[0];
+            } else if(e.target) {
+                image = e.target.files[0];
+            }
+
+            let tempImage = document.createElement("IMG");
+            tempImage.onload = function(e){
+                this.setBackgroundImage(tempImage);
+            }.bind(this);
+
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                // reader.onload doesn't know the width/height of the image
+                // so we need to add it as src to a temp image
+                // and trigger onload on that
+                tempImage.src = e.target.result;
+            }
+
+            // only proceed if image
+            if (/^image\/[(jpeg)|(png)|(gif)]/.test(image.type)) {
+                reader.readAsDataURL(image);
+            }
+        }.bind(this));
     },
 
     shuffleImage: function() {
         this.boardWrapper.className = "board i" + Math.floor(Math.random()*conf.numImages);
+        state.customImage = false;
+        this.updateRuntimeCSS();
     },
 
     handleShuffleClick: function() {
@@ -234,6 +291,12 @@ const dom = {
                 `width:${state.tileSize}px;` + 
                 `height:${state.tileSize}px;` +
                 '}';
+
+        if(state.customImage !== false) {
+            str += '.board:before, .tiles li div{';
+            str += `background-image:url(${state.customImage})`;
+            str += '}';
+        }
 
         this.runtimeStyle.innerHTML = str;
     },

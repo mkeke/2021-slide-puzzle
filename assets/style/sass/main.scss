@@ -382,9 +382,19 @@ nav .gear {
 }
 
 /*
+    drag-drop visuals
+*/
+
+.droppable {
+    &.dragover {
+        background-color: #8844ff;
+    }
+}
+
+/*
     debug styles
 */
-$debugMode: 1;
+$debugMode: 0;
 @if $debugMode > 0 {
     .fullscreen {
         //background-color: #00ff0088;
