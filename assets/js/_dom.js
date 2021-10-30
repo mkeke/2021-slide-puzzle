@@ -26,8 +26,8 @@ const dom = {
         this.ratio = this.parent.find(".ratio");
         this.boardWrapper = this.parent.find("section.board");
         this.board = this.parent.find("section.board .tiles");
-        this.options = this.parent.find("section.options");
-        this.optionsButton = this.parent.find("a.options");
+        this.options = this.parent.find(".options");
+        this.optionsButton = this.parent.find("nav .gear");
         this.gridButtons = this.options.find(".grid");
         this.restartButton = this.options.find(".restart");
         this.shuffleButton = this.options.find(".shuffle");
@@ -60,8 +60,6 @@ const dom = {
             e.preventDefault();
             state.newGame();
             this.shuffleImage();
-            this.options.removeClass("visible");
-            state.gameOn = true;
         }.bind(this));
     },
 
@@ -69,8 +67,6 @@ const dom = {
         this.restartButton.addEventListener("click", function(e){
             e.preventDefault();
             state.newGame();
-            this.options.removeClass("visible");
-            state.gameOn = true;
         }.bind(this));
     },
 
@@ -97,8 +93,6 @@ const dom = {
         this.optionsButton.addEventListener("click", function(e){
             e.preventDefault();
             this.options.toggleClass("visible");
-            // disable game interaction
-            state.gameOn = !this.options.hasClass("visible");
         }.bind(this));
     },
 

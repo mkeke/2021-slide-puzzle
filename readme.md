@@ -100,9 +100,10 @@ Making a list of what to do and in what order. More tasks might be added through
         v add misc pictures
         v set random image
         v restart game
+    v refactor options
+    - drag-drop, restart
     - background image as base64 string?
         - only if custom image. runtime-image style section + state flag
-    - drag-drop, restart
     - custom image overrides predefined image
     - upload image, restart
     - mobile: take photo
@@ -263,4 +264,8 @@ https://lysebo.xyz/games/slidepuzzle/20211024/
 ## October 28th
 ## October 29th
 ## October 30th
+
+The options pane is annoying and too complicated to use. I'm going to put the icons to the left of the gear, and let the gear toggle the visibility. Now the user can choose to have the options always visible or not. Adding a transition on opacity when toggling the visibility. Smooth af.
+
+
 ## October 31st

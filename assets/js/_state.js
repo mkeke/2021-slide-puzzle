@@ -38,10 +38,6 @@ const state = {
         
         this.gameOn = true;
         this.busy = false;
-
-        // generate tiles for this grid
-        // dom.generateTileGrid();
-        // assign image
     },
 
     /*
