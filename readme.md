@@ -271,5 +271,14 @@ Now, for the drag-drop.
 Adding class droppable to the parent container. When the user drags an image over the page, the background color should respond to that.
 Dropping the image, we must set it on the appropriate containers, and remove the default image class. selecting a custom image, state.customImage must be set to false again
 
+file upload
+- create a file input element, set it to hidden
+- create a custom button
+- event listener on the button triggers fileElement.click();
+- handle "change" on the file element
+- same upload procedure as drag drop
+- TODO: loading icon while uploading
+- TODO: create proper upload svg
+
 
 ## October 31st

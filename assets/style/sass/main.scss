@@ -317,6 +317,16 @@ nav .gear {
         );
         @include svg($svg, 0, 0, 100, 100);
     }
+
+    .upload {
+        $svg: (
+            '<rect x="5" y="5" width="90" height="90" fill="#00000080" stroke="none" />'
+            '<g stroke="none" fill="#ffff00">'
+            '<path d="M20,15 h20 l40,40 h5 v-10 l15,15 l-15,15 v -10 h-10 l-40,-40 h-15 Z" />'
+            '</g>'
+        );
+        @include svg($svg, 0, 0, 100, 100);
+    }
 }
 
 /*

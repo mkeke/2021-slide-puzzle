@@ -31,6 +31,8 @@ const dom = {
         this.gridButtons = this.options.find(".grid");
         this.restartButton = this.options.find(".restart");
         this.shuffleButton = this.options.find(".shuffle");
+        this.fileUpload = this.parent.find("nav input[type=file]");
+        this.uploadButton = this.options.find(".upload");
 
         // update active config buttons
         this.updateConfigButtons();
@@ -49,8 +51,48 @@ const dom = {
         this.handleGridSelect();
         this.handleRestartClick();
         this.handleShuffleClick();
+        this.handleUploadClick();
+        this.handleFileChange();
 
         this.handleDragDrop();
+    },
+
+    handleFileChange: function() {
+        this.fileUpload.addEventListener("change", function(e){
+
+            let image;
+            if(e.dataTransfer) {
+                image = e.dataTransfer.files[0];
+            } else if(e.target) {
+                image = e.target.files[0];
+            }
+
+
+            let tempImage = document.createElement("IMG");
+            tempImage.onload = function(e){
+                this.setBackgroundImage(tempImage);
+            }.bind(this);
+
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                // reader.onload doesn't know the width/height of the image
+                // so we need to add it as src to a temp image
+                // and trigger onload on that
+                tempImage.src = e.target.result;
+            }
+
+            // only proceed if image
+            if (/^image\/[(jpeg)|(png)|(gif)]/.test(image.type)) {
+                reader.readAsDataURL(image);
+            }
+
+        }.bind(this));
+    },
+
+    handleUploadClick: function() {
+        this.uploadButton.addEventListener("click", function(e) {
+            this.fileUpload.click();
+        }.bind(this));
     },
 
     setBackgroundImage: function(imageElement) {
