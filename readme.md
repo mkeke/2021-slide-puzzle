@@ -2,25 +2,25 @@
 
 Sliding tile puzzle (devtober 2021)
 
+https://lysebo.xyz/games/slidepuzzle
+
+Click on a tile to move it towards the free space, and try to complete the puzzle! Press the animated options gear to select a different grid (3x3, 4x4 or 5x5). Restart the current game (keeping the same picture) or shuffle the game (selecting a random picture).
+
+On desktop you can drag-drop a custom image onto the game. Or you can click the camera icon to upload an image. On mobile you can even take a picture. Custom images are not stored anywhere. They are only cached in the browser as long as you play the game.
+
+This game was created in October 2021 as a **devtober** contribution.
+
 # Devtober log
 
 ## October 1st
 
-### Ideas
-
 Discovering devtober and thinking about what to make.
-
 
 ## October 2nd
 
-### Decision
-
 Deciding on making a sliding tile puzzle game for mobile and desktop using HTML, CSS and vanilla JavaScript.
 
-
 ## October 3rd
-
-### Features
 
 I want to implement the following features:
 
@@ -43,7 +43,6 @@ I want to implement the following features:
 - Count moves (on off)
 - Timed game (on off)
 
-### Design
 
 Quick and dirty design sketches.
 
@@ -62,9 +61,7 @@ Select image dialog. Select from some predefined images
 
 ## October 4th
 
-### Master plan
-
-Making a list of what to do and in what order. More tasks might be added throughout the process, the order might be changed. This list will be updated to reflect the process. 
+Making a master plan of what to do and in what order. More tasks might be added throughout the process, the order might be changed. This list will be updated to reflect the process. 
 
     v init github project
     v set up codebase, define objects, definitions, ..
@@ -103,25 +100,20 @@ Making a list of what to do and in what order. More tasks might be added through
     v refactor options
     v drag-drop, restart
     v custom image overrides predefined image
-    - upload image, restart
-    - background image as base64 string?
-        - only if custom image. runtime-image style section + state flag
-    - mobile: take photo
-    - create google/facebook meta tags. remember correct image ratio
+    v upload image, restart
+    v background image as base64 string?
+        v only if custom image. runtime-image style section + state flag
+    v mobile: take photo
+    v link to github
+    v create google/facebook meta tags. remember correct image ratio
     - upload game to server
-    - link to github
     - add process description + screenshots ++ to readme.md
 
-### Init GitHub project
 
-Hello, I just created this readme file and a folder for screenshots. Let's go!
-
-### Codebase
+Let's go!
 
 Setting up the codebase, based on experience from the games I've made recently.
 conf defines the different grids available, and the default (starting) grid. Conf also defines the white space on either side of the board. This is needed to calculate the correct board and layout size in the next step.
-
-### Responsive layout
 
 `fullscreen` takes the entire screen. The size and position of `ratio` is calculated based on `state.grid` (the current grid size), `conf.hSpace` and `conf.vSpace`.
 
@@ -133,11 +125,7 @@ Yuuuup, just like that. Gray area is ratio wrapper. Red area is board with 2px b
 
 ## October 5th
 
-### runtime css
-
-It's convenient to update a style section instead of assigning styles to every DOM element. This is done for each screen resize, and everythime the grid changes.
-
-### Tile markup and background images
+Creating a runtime css section. It's convenient to update a style section instead of assigning styles to every DOM element. This is done for each screen resize, and everythime the grid changes.
 
 Generating tiles based on the selected grid size (state.grid) and positioning them inside the tiles container. The size of the tiles container is one tile, thus making positioning of the tiles easy and responsive, in 100% increments.
 
@@ -164,17 +152,14 @@ each tile has a div that is the size of the entire board, and positioned differe
 ```
 
 
-### grid borders
-
 Using the before-element on each tile to set a shiny 2px border.
 
 <img src="screenshots/05-bgimage.png"/>
 
 I'll deal with the color palette later :-P
 
-## October 6th
-## October 7th
-## October 8th
+## October 6th - 8th
+
 ## October 9th
 
 To sum up.. the different tiles show the correct image fragment. All this is handled by setting the appropriate coordinate css classes on each tile.
@@ -196,14 +181,10 @@ Tiles can be nmoved only if it is on the same axis as the free space. So we need
 
 Adding a 0.2s transition on left + top
 
-## October 11th
-## October 12th
-## October 13th
-## October 14th
-## October 15th
+## October 11th - 15th
+
 ## October 16th
 
-All work and no play.
 I am confused by my own code, and need to refactor things related to building the tiles, and maintaining the state of the board.
 
 board.tiles[y][x] gives info about the tile currently in that position. tile has { ox: <int>, oy: <int>, el: <el> } describing where the tile belongs. I need the element, so I don't have to search the DOM every time the user click a tile.
@@ -227,10 +208,8 @@ https://lysebo.xyz/games/slidepuzzle/20211018
 
 
 
-## October 19th
-## October 20th
-## October 21st
-## October 22nd
+## October 19th - 22nd
+
 ## October 23rd
 
 Creating a gear svg to serve as an options toggle. I have reserved 30px for the height of the gear. So how do one construct the perfect gear symbol? Drawing some examples to find the proper form. Using the same knob path and rotating it 9 times around the origo. Using a mask to get a transparent center. Nice!
@@ -258,11 +237,8 @@ Creating a shuffle icon and ading it to the options pane. Adding more images, as
 
 https://lysebo.xyz/games/slidepuzzle/20211024/
 
-## October 25th
-## October 26th
-## October 27th
-## October 28th
-## October 29th
+## October 25th - 29th
+
 ## October 30th
 
 The options pane is annoying and too complicated to use. I'm going to put the icons to the left of the gear, and let the gear toggle the visibility. Now the user can choose to have the options always visible or not. Adding a transition on opacity when toggling the visibility. Smooth af.
@@ -271,14 +247,26 @@ Now, for the drag-drop.
 Adding class droppable to the parent container. When the user drags an image over the page, the background color should respond to that.
 Dropping the image, we must set it on the appropriate containers, and remove the default image class. selecting a custom image, state.customImage must be set to false again
 
-file upload
-- create a file input element, set it to hidden
-- create a custom button
-- event listener on the button triggers fileElement.click();
-- handle "change" on the file element
-- same upload procedure as drag drop
-- TODO: loading icon while uploading
-- TODO: create proper upload svg
-
+Implementing file upload. So happy to see that mobile can choose between pictures and camera! That's nice! The upload procedure is exactly the same as for drag-drop.
 
 ## October 31st
+
+Last day!
+
+- changed the yellow border and color on the free space tile
+- refactored upload process
+- proper upload/camera svg icon
+- stole the github icon and put it among the options
+- added one more image
+- added google/fb metatags + preview image
+
+Going to use the next days to clean up, write som stuff etc.
+
+- cleanup devtober log
+- comment functions
+- write docs. explain icons
+- write conclusion
+- upload to server
+
+    - dragover-svg background animated
+    - loading icon while uploading
