@@ -9,6 +9,8 @@ Click on a tile to move it towards the free space, and try to complete the puzzl
 On desktop you can drag-drop a custom image onto the game. Or you can click the camera icon to upload an image. On mobile you can even take a picture. Custom images are not stored anywhere. They are only cached in the browser as long as you play the game.
 
 This game was created in October 2021 as a **devtober** contribution.
+https://itch.io/jam/devtober-2021
+
 
 # Devtober log
 
