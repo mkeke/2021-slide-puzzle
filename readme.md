@@ -1,26 +1,49 @@
-# Slide puzzle
-
-Sliding tile puzzle (devtober 2021)
+# Sliding tile puzzle (devtober 2021)
 
 https://lysebo.xyz/games/slidepuzzle
 
-Click on a tile to move it towards the free space, and try to complete the puzzle! Press the animated options gear to select a different grid (3x3, 4x4 or 5x5). Restart the current game (keeping the same picture) or shuffle the game (selecting a random picture).
+<img src="assets/images/preview.png" />
 
-On desktop you can drag-drop a custom image onto the game. Or you can click the camera icon to upload an image. On mobile you can even take a picture. Custom images are not stored anywhere. They are only cached in the browser as long as you play the game.
+Complete the puzzle by clicking on a tile and moving it into the free space. Keyboard navigation is possible with the arrow keys. Click the animated gear to reveal/hide options.
 
-This game was created in October 2021 as a **devtober** contribution.
-https://itch.io/jam/devtober-2021
+The options are:
+- select preferred grid (3x3, 4x4 or 5x5 tiles)
+- restart (keeping the current picture)
+- shuffle (select a random picture)
+- upload your own image (jpg, png, gif) or take a picture (mobile)
 
+On desktop you can even drag-drop a custom image onto the game.
+
+Uploaded images are not stored anywhere. They are only visible in your browser as long as you play the game.
+
+This game was developed during October 2021, inspired by devtober. THe devtober log is below. https://itch.io/jam/devtober-2021
+
+# Thoughts about devtober
+
+kult å ha et press på seg
+merker det litt i kvaliteten på koden. skulle gjerne perfeksjonert ting litt mer, siden det er et koseprosjekt.
+ambisjon om å kode litt hver dag. fant raskt ut at det går ikke, family man og jobb og andre ting. Men å få koda litt hver uke er mer realistisk, og det er et prinsipp jeg har hatt med tidligere spill (linker!). Litt hver uke, og da får man masse "dødtid" til å tenke og gruble på algoritmer og veie for og imot ulike beslutninger.
+
+
+# TODOs
+
+Further development of this game should include the following features:
+
+- On desktop the user should be able to show/hide the options and navigate through the different buttons.
+
+- When uploading an image, there should be a process indicator.
 
 # Devtober log
 
+Following is a small log of the development process.
+
 ## October 1st
 
-Discovering devtober and thinking about what to make.
+Eek, I just discovered devtober and need to think about what to make!
 
 ## October 2nd
 
-Deciding on making a sliding tile puzzle game for mobile and desktop using HTML, CSS and vanilla JavaScript.
+Finally deciding on making a sliding tile puzzle game for mobile and desktop using HTML, CSS and vanilla JavaScript.
 
 ## October 3rd
 
@@ -29,7 +52,7 @@ I want to implement the following features:
 - Responsive layout, working on all types of screens
 - Playable on desktop and mobile
 - Scramble the puzzle
-- Click a tile to move into free space
+- Click a tile to move it into free space
 - Tile click moves several tiles if along the same path
 - Press arrow keys to move a tile to the free space
 - Complete: remove tile grid and display full image. Transition.
@@ -46,7 +69,7 @@ I want to implement the following features:
 - Timed game (on off)
 
 
-Quick and dirty design sketches.
+Starting with some quick and dirty design sketches.
 
 <img src="screenshots/01-design.jpg" />
 
@@ -60,10 +83,9 @@ Options layer. Select grid size, restart, select image, random image, signature,
 
 Select image dialog. Select from some predefined images
 
-
 ## October 4th
 
-Making a master plan of what to do and in what order. More tasks might be added throughout the process, the order might be changed. This list will be updated to reflect the process. 
+Making a master plan of what to do and in what order. More tasks might be added throughout the process. This list will be updated to reflect the process.
 
     v init github project
     v set up codebase, define objects, definitions, ..
@@ -108,18 +130,19 @@ Making a master plan of what to do and in what order. More tasks might be added 
     v mobile: take photo
     v link to github
     v create google/facebook meta tags. remember correct image ratio
-    - upload game to server
-    - add process description + screenshots ++ to readme.md
-
+    v upload game to server
+    v add process description + screenshots ++ to readme.md
 
 Let's go!
 
 Setting up the codebase, based on experience from the games I've made recently.
-conf defines the different grids available, and the default (starting) grid. Conf also defines the white space on either side of the board. This is needed to calculate the correct board and layout size in the next step.
+conf defines the configurable values in the game, such as the default starting grid (4, meaning 4x4). Conf also defines the white space on either side of the board. This is needed to calculate the correct board and layout size in the next step.
 
-`fullscreen` takes the entire screen. The size and position of `ratio` is calculated based on `state.grid` (the current grid size), `conf.hSpace` and `conf.vSpace`.
+The DOM element `.fullscreen` takes the entire screen. Some reset/normalize CSS is applied to the outer containers to avoid otherwise helpful browser features (such as pull-down to refresh). The size and position of `ratio` is calculated based on `state.grid` (the current grid size), `conf.hSpace` and `conf.vSpace`.
 
-The board flows inside the ratio container. I calculate the width and height of the board and set is as a runtime style. Another approach would be to use padding-bottom as ratio for the board, but in this case the browser renders the board slightly higher than the width. This is because I have box-sizing: content-box and a 2px border on the element. With a tile size of 100px, the board is 404x408 when using that technique.
+The board flows inside the ratio container. I calculate the width and height of the board and set is as a runtime style. Another approach would be to use padding-bottom as ratio for the board, but in this case the browser renders the board slightly higher than the width. This is because I have box-sizing: content-box and a 2px border on the element. With a tile size of 100px, the board is 404x408 when using that technique. I survived the browser wars so this is no biggie. :-p
+
+I ensure that each tile in the grid has an absolute integer value. No percentages thanks! I have explained this thoroughly in another repo. The point is to reduce the possibility of glitches and inaccuracies caused by the different browsers rounding functions.
 
 <img src="screenshots/04-skeleton.png" />
 
@@ -127,12 +150,11 @@ Yuuuup, just like that. Gray area is ratio wrapper. Red area is board with 2px b
 
 ## October 5th
 
-Creating a runtime css section. It's convenient to update a style section instead of assigning styles to every DOM element. This is done for each screen resize, and everythime the grid changes.
+Creating a runtime css section. I think it's both convenient and tidy to update a style section now and then, instead of (re-)assigning styles to every DOM element that has changed. This is done for each screen resize, and everythime the grid changes.
 
-Generating tiles based on the selected grid size (state.grid) and positioning them inside the tiles container. The size of the tiles container is one tile, thus making positioning of the tiles easy and responsive, in 100% increments.
+Generating tiles based on the selected grid size (`state.grid`) and positioning them inside the tiles container. The size of the tiles container is one tile, thus making positioning of the tiles easy and responsive, in 100% increments.
 
-The background image is slightly more tricky.
-each tile has a div that is the size of the entire board, and positioned differently based on the initial coordinate. The tile has the background image covered. This works with 100% increments. No need to calculate based on grid size. We can have predefined css classes that set the correct position of the inner div.
+The background image is slightly more tricky. Each tile has a div that is the size of the entire board, and positioned differently based on the initial coordinate. The tile has the background image covered. This is also solved with 100% increments. No need to calculate based on grid size. We can have predefined css classes that set the correct position of the inner div.
 
 ```
 .tiles {
@@ -152,7 +174,6 @@ each tile has a div that is the size of the entire board, and positioned differe
     }
 }
 ```
-
 
 Using the before-element on each tile to set a shiny 2px border.
 
