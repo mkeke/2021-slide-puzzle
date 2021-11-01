@@ -143,7 +143,7 @@ Making a master plan of what to do and in what order. More tasks might be added 
 
 Let's go!
 
-Setting up the codebase, based on experience from the games I've made recently. Identifying the different objects I want to use, somewhat organized by purpose. Such as `conf{}` wich holds all configurable "magic numbers" in the game. For instance the default starting grid (4, meaning a 4x4 grid).
+Setting up the codebase. Identifying and creating different objects, somewhat organized by purpose.
 
 The outer DOM elements `.fullscreen` and `.ratio` have some reset/normalize CSS rules applied to them, to avoid otherwise helpful browser features (such as pull-down to refresh). Features that are only annoying in a game context. The size and position of `ratio` is calculated based on `state.grid` (the current grid size) and different space values defined in `conf{}`.
 
@@ -153,11 +153,11 @@ I ensure that each tile in the grid has an absolute integer value. Avoiding perc
 
 <img src="screenshots/04-skeleton.png" />
 
-Yuuuup, just like that. Gray area is ratio wrapper. Red area is board with 2px border.
+Yuuuup, just like that. Gray area is ratio wrapper. Red area is board with 2px border. Reserving 30px vertical space for option buttons.
 
 ## October 5th
 
-Expanding the runtime css section. I think it's both convenient and tidy to update a style section instead of (re-)assigning styles to every DOM element that has changed. This is done for each screen resize, and everytime the grid changes.
+Expanding the runtime css section. I think it's both convenient and tidy to update a style section instead of assigning styles to every DOM element that has changed. This is done for each screen resize, and everytime the grid changes.
 
 Generating tiles based on the selected grid size in `state.grid` and positioning them inside the tiles container. The size of the tiles container is one tile, thus making positioning of the tiles easy and responsive, in 100% increments.
 
@@ -209,7 +209,7 @@ The array `board.tiles` represents each coordinate of the board. Each element of
 
 Having generated the tile array, it needs to be shuffled before we can generate the html. First, I create the function for generating the tiles, to be able to test the shuffle properly.
 
-Shuffling the board without repeating the last step, and starting with the free space on the top left corner. For this I need a fast way of knowing where the space is. `board.space{x,y}` will hold this coordinate.
+Shuffling the board without repeating the last step, and ending with the free space on the top left corner. I need a fast way of knowing where the space is. `board.space{x,y}` will hold this coordinate.
 
 Whenever a tile is clicked, it is moved in the direction of the free space, as long as the free space is on the same horizontal or vertical axis. The markup for the tiles will be generated whenever the grid changes. Any event handlers attached must then be re-attached. I don't want that! Maybe it's better to promote the click event to one of the parent containers, and only take action if a tile is clicked. The board container seems like a good candidate.
 
