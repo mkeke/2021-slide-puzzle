@@ -4,34 +4,42 @@ https://lysebo.xyz/games/slidepuzzle
 
 <img src="assets/images/preview.png" />
 
-Complete the puzzle by clicking on a tile and moving it into the free space. Keyboard navigation is possible with the arrow keys. Click the animated gear to reveal/hide options.
+Solve the puzzle by clicking on a tile and moving it into the free space. Keyboard navigation is possible with the arrow keys. Click the animated gear to reveal/hide options.
 
 The options are:
-- select preferred grid (3x3, 4x4 or 5x5 tiles)
-- restart (keeping the current picture)
-- shuffle (select a random picture)
-- upload your own image (jpg, png, gif) or take a picture (mobile)
+- select grid (3x3, 4x4 or 5x5 tiles)
+- restart game (keeping the current picture)
+- shuffle game (select a random picture)
+- upload image (jpg, png, gif) or take a picture (mobile)
 
 On desktop you can even drag-drop a custom image onto the game.
 
 Uploaded images are not stored anywhere. They are only visible in your browser as long as you play the game.
 
-This game was developed during October 2021, inspired by devtober. THe devtober log is below. https://itch.io/jam/devtober-2021
 
 # Thoughts about devtober
 
-kult å ha et press på seg
-merker det litt i kvaliteten på koden. skulle gjerne perfeksjonert ting litt mer, siden det er et koseprosjekt.
-ambisjon om å kode litt hver dag. fant raskt ut at det går ikke, family man og jobb og andre ting. Men å få koda litt hver uke er mer realistisk, og det er et prinsipp jeg har hatt med tidligere spill (linker!). Litt hver uke, og da får man masse "dødtid" til å tenke og gruble på algoritmer og veie for og imot ulike beslutninger.
+This game was developed during October 2021, inspired by the devtober initiative (https://itch.io/jam/devtober-2021). It was a fun experience, and really satisfying to complete the goal on time.
+
+Working with a deadline is useful. The beauty of a spare-time project is having the time to experiment and perfecting the details. The trick is to find the right balance. The time limit was perhaps a bit too narrow this time. Or perhaps the project was a bit too ambitious?
+
+The devtober ambition is to code a little every day. My ambition is to get a fair amount done every week. The point is really to have an ongoing process. On days without coding I sometimes think and plan and dream of the next steps.
+
+Prior to this, it's been many months without a real gamedev project. Devtober has kickstarted this routine again. Thanks, devtober!
 
 
 # TODOs
 
-Further development of this game should include the following features:
+The time is up. However, possible further development of this game should include the following features:
 
-- On desktop the user should be able to show/hide the options and navigate through the different buttons.
+- On desktop, it should be possible to show/hide the options and navigate through the different buttons with the keyboard.
 
 - When uploading an image, there should be a process indicator.
+
+- All magic numbers should originate from a config object.
+
+- The functions should have more comments
+
 
 # Devtober log
 
@@ -135,14 +143,13 @@ Making a master plan of what to do and in what order. More tasks might be added 
 
 Let's go!
 
-Setting up the codebase, based on experience from the games I've made recently.
-conf defines the configurable values in the game, such as the default starting grid (4, meaning 4x4). Conf also defines the white space on either side of the board. This is needed to calculate the correct board and layout size in the next step.
+Setting up the codebase, based on experience from the games I've made recently. Identifying the different objects I want to use, somewhat organized by purpose. Such as `conf{}` wich holds all configurable "magic numbers" in the game. For instance the default starting grid (4, meaning a 4x4 grid).
 
-The DOM element `.fullscreen` takes the entire screen. Some reset/normalize CSS is applied to the outer containers to avoid otherwise helpful browser features (such as pull-down to refresh). The size and position of `ratio` is calculated based on `state.grid` (the current grid size), `conf.hSpace` and `conf.vSpace`.
+The outer DOM elements `.fullscreen` and `.ratio` have some reset/normalize CSS rules applied to them, to avoid otherwise helpful browser features (such as pull-down to refresh). Features that are only annoying in a game context. The size and position of `ratio` is calculated based on `state.grid` (the current grid size) and different space values defined in `conf{}`.
 
-The board flows inside the ratio container. I calculate the width and height of the board and set is as a runtime style. Another approach would be to use padding-bottom as ratio for the board, but in this case the browser renders the board slightly higher than the width. This is because I have box-sizing: content-box and a 2px border on the element. With a tile size of 100px, the board is 404x408 when using that technique. I survived the browser wars so this is no biggie. :-p
+The board flows inside the ratio container. On each screen resize, the width and height of the board are calculated. The values are set in a runtime style element on the page.
 
-I ensure that each tile in the grid has an absolute integer value. No percentages thanks! I have explained this thoroughly in another repo. The point is to reduce the possibility of glitches and inaccuracies caused by the different browsers rounding functions.
+I ensure that each tile in the grid has an absolute integer value. Avoiding percentages, to reduce the possibility of glitches and inaccuracies caused by the different browsers rounding functions.
 
 <img src="screenshots/04-skeleton.png" />
 
@@ -150,11 +157,11 @@ Yuuuup, just like that. Gray area is ratio wrapper. Red area is board with 2px b
 
 ## October 5th
 
-Creating a runtime css section. I think it's both convenient and tidy to update a style section now and then, instead of (re-)assigning styles to every DOM element that has changed. This is done for each screen resize, and everythime the grid changes.
+Expanding the runtime css section. I think it's both convenient and tidy to update a style section instead of (re-)assigning styles to every DOM element that has changed. This is done for each screen resize, and everytime the grid changes.
 
-Generating tiles based on the selected grid size (`state.grid`) and positioning them inside the tiles container. The size of the tiles container is one tile, thus making positioning of the tiles easy and responsive, in 100% increments.
+Generating tiles based on the selected grid size in `state.grid` and positioning them inside the tiles container. The size of the tiles container is one tile, thus making positioning of the tiles easy and responsive, in 100% increments.
 
-The background image is slightly more tricky. Each tile has a div that is the size of the entire board, and positioned differently based on the initial coordinate. The tile has the background image covered. This is also solved with 100% increments. No need to calculate based on grid size. We can have predefined css classes that set the correct position of the inner div.
+The background image is slightly more tricky. Each tile has a div that is the size of the entire board, and positioned differently based on the initial coordinate. The div has the background image covered. The positioning is also solved with 100% increments. No need to calculate based on grid size. We can have predefined css classes that set the correct position of the inner div.
 
 ```
 .tiles {
@@ -175,6 +182,15 @@ The background image is slightly more tricky. Each tile has a div that is the si
 }
 ```
 
+or rather
+
+```
+@for $i from 0 through 7 {
+    &.x#{$i} div { left: #{$i * -100%}; }
+    &.y#{$i} div { top: #{$i * -100%}; }
+}
+```
+
 Using the before-element on each tile to set a shiny 2px border.
 
 <img src="screenshots/05-bgimage.png"/>
@@ -185,24 +201,23 @@ I'll deal with the color palette later :-P
 
 ## October 9th
 
-To sum up.. the different tiles show the correct image fragment. All this is handled by setting the appropriate coordinate css classes on each tile.
+I need to keep track of each tile's position throughout the game. A 2-dimensional array with coordinates should to the trick. That way I only need to check the internal structure instead of checking the DOM.
 
-I need to keep track of each tile's position throughout the game. A 2-dimensional array with coordinates should to the trick. That way I only need to check query the internal structure instead of checking the DOM.
-The array board.tiles represents each coordinate of the board. Each element of the array has `{ x: <int>, y: <int> }` where the values reflect the intended coordinate. The game is solved only if all array coordinates correspond to the coordinates in the value. Poor explanation.
+The array `board.tiles` represents each coordinate of the board. Each element of the array has `{ x: <int>, y: <int> }` where the values reflect the intended coordinate. The game is solved only if all array coordinates correspond to the coordinates in the value. Poor explanation.
 
 ## October 10th
 
-Having generated the tile array, it needs to be shuffled before we can generate the html. First, I create the function for generating the tiles, to be able to test the shuffle properly
+Having generated the tile array, it needs to be shuffled before we can generate the html. First, I create the function for generating the tiles, to be able to test the shuffle properly.
 
-Shuffling the board without repeating the last step, and starting with the free space on the top left corner. For this I need a fast way of knowing where the space is. board.space{x,y} will hold this coordinate.
+Shuffling the board without repeating the last step, and starting with the free space on the top left corner. For this I need a fast way of knowing where the space is. `board.space{x,y}` will hold this coordinate.
 
-Whenever a tile is clicked, it is moved in the direction of the free space, as long as the free space is on the same horizontal or vertical axis. The markup for the tiles will be generated whenever the grid changes. Any event handlers attached must then be re-attached. I don't want that. Maybe it's better to promote the click event to one of the parent containers, and only take action if a tile is clicked. The board container seems like a good candidate.
+Whenever a tile is clicked, it is moved in the direction of the free space, as long as the free space is on the same horizontal or vertical axis. The markup for the tiles will be generated whenever the grid changes. Any event handlers attached must then be re-attached. I don't want that! Maybe it's better to promote the click event to one of the parent containers, and only take action if a tile is clicked. The board container seems like a good candidate.
 
-The click event gives us e.clientX and e.clientY, which makes it possible to calculate which tile coordinate is clicked. This coordinate is relative to the upper left corner of the viewport, so it needs to be translated into something useful. I already maintain `state.ratioLeft` and `state.ratioTop`.
+The click event gives us `e.clientX` and `e.clientY`, which makes it easy to calculate which tile coordinate is clicked. This coordinate is relative to the upper left corner of the viewport, so it needs to be translated into something useful. Getting help from `state.ratioLeft` and `state.ratioTop` which are already being maintained upon each screen resize.
 
-Tiles can be nmoved only if it is on the same axis as the free space. So we need to find that out first. Move tiles to free space until we've reached the clicked position.
+A tile can only be moved if it lays on the same axis as the free space. So we need to find that out first. Move tiles to free space until we've reached the clicked position.
 
-Adding a 0.2s transition on left + top
+Adding a 0.2s transition on left + top and achieving the gamification badge! :-p
 
 ## October 11th - 15th
 
@@ -210,32 +225,28 @@ Adding a 0.2s transition on left + top
 
 I am confused by my own code, and need to refactor things related to building the tiles, and maintaining the state of the board.
 
-board.tiles[y][x] gives info about the tile currently in that position. tile has { ox: <int>, oy: <int>, el: <el> } describing where the tile belongs. I need the element, so I don't have to search the DOM every time the user click a tile.
+`board.tiles[y][x]` gives info about the tile currently in that position. tile has `{ ox: <int>, oy: <int> }` describing where the tile belongs. I also need the element, so I don't have to search the DOM every time the user click a tile. Adding it to each coordinate.
 
-Before moving tiles, state.busy must be true. After the tiles have finished moving, state.busy is set to false again. This prevents the user from moving tiles off the board
+Before moving tiles, `state.busy` must be `true`. After the tiles have finished moving, `state.busy` is set to `false` again. This prevents the user from moving tiles off the board.
 
 ## October 17th
 
-Refactor of transitionEnd event handler and state.busy.
+Refactor of transitionEnd event handler and `state.busy`.
 
 ## October 18th
 
 Adding more events to move the tiles. keypress, touchstart
 
-check if puzzle is complete
-    - check if finished.
-    - fade out grid.
-    - show full image.
-
-https://lysebo.xyz/games/slidepuzzle/20211018
-
-
+Check if puzzle is complete.
+- check if finished
+- fade out grid
+- show full image
 
 ## October 19th - 22nd
 
 ## October 23rd
 
-Creating a gear svg to serve as an options toggle. I have reserved 30px for the height of the gear. So how do one construct the perfect gear symbol? Drawing some examples to find the proper form. Using the same knob path and rotating it 9 times around the origo. Using a mask to get a transparent center. Nice!
+Creating a gear SVG to serve as an options toggle icon. I have reserved 30px for the height of the gear. So how does a poor boy construct the perfect gear symbol? Drawing some examples to find the proper form. Using the same knob path and rotating it 9 times around the origo. Using a mask to get a transparent center. Nice! I love SVG!
 
 <img src="screenshots/06-gear-knobs.jpg" />
 
@@ -246,50 +257,47 @@ Creating a gear svg to serve as an options toggle. I have reserved 30px for the 
 <img src="screenshots/09-gear-svg.png" />
 
 
-creating a section for options. clicking on the gear toggles the visibility. When the section is visible, state.gameOn is true, disabling all game related interactions.
+creating a section for options. clicking on the gear toggles the visibility. When the section is visible, `state.gameOn` is `true`, disabling all game related interactions.
 
 Being hung up on SVGs I might start with creating icons for changing grids. 3, 4, 5, 6, 7 tiles in either direction. Background color is green for the easiest grid and red for the hardest grid. Up next is to reset the grid, and reset the game, when the user clicks a grid.
 
 ## October 24th
 
-clicking on a grid option resets the game, keeping the current image.
+Clicking on a grid option resets the game, keeping the current image.
 
 Creating a restart icon. Clicking on it resets the current game, keeping the grid and image.
 
-Creating a shuffle icon and ading it to the options pane. Adding more images, assigning them to different board classes (i0, i1, i2, ...) and creating conf.numImages (int) to help select a proper random value.
-
-https://lysebo.xyz/games/slidepuzzle/20211024/
+Creating a shuffle icon and ading it to the options pane. Adding more images, assigning them to different board classes (i0, i1, i2, ...) and creating `conf.numImages` (int) so the random function knows what to do.
 
 ## October 25th - 29th
 
 ## October 30th
 
-The options pane is annoying and too complicated to use. I'm going to put the icons to the left of the gear, and let the gear toggle the visibility. Now the user can choose to have the options always visible or not. Adding a transition on opacity when toggling the visibility. Smooth af.
+The options section is annoying and not user friendly at all! I'm going to put the icons to the left of the gear, and let the gear toggle the visibility. Now the user can choose to have the options always visible or not. Adding a transition on opacity when toggling the visibility. Smooth AF!
 
 Now, for the drag-drop.
-Adding class droppable to the parent container. When the user drags an image over the page, the background color should respond to that.
-Dropping the image, we must set it on the appropriate containers, and remove the default image class. selecting a custom image, state.customImage must be set to false again
+Adding class `droppable` to the parent container. When the user drags an image over the page, the background color should respond to that.
+Dropping the image, we must set it on the appropriate containers, and remove the default image class. Selecting a custom image, `state.customImage` must be set to false again.
 
-Implementing file upload. So happy to see that mobile can choose between pictures and camera! That's nice! The upload procedure is exactly the same as for drag-drop.
+Implementing file upload. So happy to see that mobile users can choose between pictures and camera! That's nice! The upload procedure is exactly the same as for drag-drop.
 
 ## October 31st
 
 Last day!
 
-- changed the yellow border and color on the free space tile
-- refactored upload process
-- proper upload/camera svg icon
-- stole the github icon and put it among the options
-- added one more image
-- added google/fb metatags + preview image
+Saying farewell to the yellow border. Also chosing a color for the free space tile.
 
-Going to use the next days to clean up, write som stuff etc.
+Refactored upload processes.
 
-- cleanup devtober log
-- comment functions
-- write docs. explain icons
-- write conclusion
-- upload to server
+Added a proper upload/camera SVG icon
 
-    - dragover-svg background animated
-    - loading icon while uploading
+Stole the github icon and put it among the options.
+
+Added more images
+
+Added google/fb metatags + preview image.
+
+I made it! :-D
+
+Going to use the next days to clean up the code, write som stuff etc.
+
