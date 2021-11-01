@@ -21,9 +21,9 @@ Uploaded images are not stored anywhere. They are only visible in your browser a
 
 This game was developed during October 2021, inspired by the devtober initiative (https://itch.io/jam/devtober-2021). It was a fun experience, and really satisfying to complete the goal on time.
 
-Working with a deadline is useful. The beauty of a spare-time project is having the time to experiment and perfecting the details. The trick is to find the right balance. The time limit was perhaps a bit too narrow this time. Or perhaps the project was a bit too ambitious?
+Working towards a deadline is useful. The beauty of a spare-time project is having the time to experiment and perfecting the details. The trick is to find the right balance between the two, prefereably with more fun than frustration. The time limit was perhaps a bit too narrow for me this time. Or perhaps the project was a bit too ambitious?
 
-The devtober ambition is to code a little every day. My ambition is to get a fair amount done every week. The point is really to have an ongoing process. On days without coding I sometimes think and plan and dream of the next steps.
+Devtober suggest coding a little every day. My ambition is to get a fair amount done every week. The point is really to have an ongoing process. On days without coding I sometimes think and plan and dream of the next steps, keeping my brain occupied with good stuff.
 
 Prior to this, it's been many months without a real gamedev project. Devtober has kickstarted this routine again. Thanks, devtober!
 
@@ -298,6 +298,4 @@ Added more images
 Added google/fb metatags + preview image.
 
 I made it! :-D
-
-Going to use the next days to clean up the code, write som stuff etc.
 
