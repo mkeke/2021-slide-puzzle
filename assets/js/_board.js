@@ -6,11 +6,12 @@
 const board = {
     // 2d array representing the current state of the tiles
     tiles: undefined, // [y][x] = { ox:<int>, oy:<int>, el: <el> }
+
+    // coordinate to the free tile
     space: undefined, // { x:<int>, y:<int> }
 
     init: function() {
         this.initTiles();
-  //      log(this.tiles);
         this.shuffle();
         dom.generateTileGrid();
     },
@@ -33,6 +34,11 @@ const board = {
         this.space = {x: state.grid-1, y: state.grid-1};
     },
 
+    /*
+        shuffle()
+        shuffle the board by swapping tiles a number of times
+        end with the free space at the top left
+    */
     shuffle: function() {
         let lastSpace = {...this.space};
 
@@ -55,6 +61,7 @@ const board = {
             lastSpace = {...this.space};
             this.swap(moves[dir].mx, moves[dir].my);
         }
+
         // move space to the upper left corner
         while(this.space.x > 0) {
             this.swap(this.space.x-1, this.space.y);
@@ -64,20 +71,21 @@ const board = {
         }
     },
 
+    /*
+        swap(x, y)
+        Swap tile coordinate with current space coordinate
+    */
     swap: function(x, y) {
-        // swap coordinate with space coordinate
-        // update space coordinate
-        // update empty coordinate in board tiles
-
-//        log(`swap [${x},${y}] <--> [${this.space.x},${this.space.y}]`);
-
         this.tiles[this.space.y][this.space.x] = {...this.tiles[y][x]};
         this.space = {x:x, y:y};
         this.tiles[y][x] = false;
     },
 
+    /*
+        move(x, y)
+        move the tile on the specified coordinate towards the space tile
+    */
     move: function(x, y) {
-        // move the tile on the specified coordinate towards the space tile
 
         // verify input values
         if(x<0 || x>=state.grid || y<0 || y>=state.grid) {
@@ -120,6 +128,12 @@ const board = {
         }
     },
 
+    /*
+        moveReady()
+        End event handler.
+        Tiles have moved.
+        Show end or continue receiving user inputs if not done
+    */
     moveReady: function() {
         this.tempel.removeEventListener(state.trend, this.tempfu);
 
@@ -131,6 +145,10 @@ const board = {
         }
     },
 
+    /*
+        isComplete()
+        Checks if the puzzle is complete
+    */
     isComplete: function() {
         for(let y=0; y<state.grid; y++) {
             for(let x=0; x<state.grid; x++) {

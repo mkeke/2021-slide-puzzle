@@ -12,6 +12,5 @@ const def = {
     keyRight: 39,
 
     init: function() {
-        log("def.init()");
     },
 };

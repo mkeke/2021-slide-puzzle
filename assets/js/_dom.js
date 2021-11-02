@@ -250,8 +250,6 @@ const dom = {
 
     */
     calculateSizes: function() {
-        log("calculateSizes()");
-
         let innerWidth = Math.min(conf.maxWidth, 
                             Math.max(conf.minWidth, window.innerWidth));
 
