@@ -17,7 +17,7 @@ On desktop you can even drag-drop a custom image onto the game.
 Uploaded images are not stored anywhere. They are only visible in your browser as long as you play the game.
 
 
-# Thoughts about devtober
+# devtober
 
 This game was developed during October 2021, inspired by the devtober initiative (https://itch.io/jam/devtober-2021). It was a fun experience, and really satisfying to complete the goal on time.
 
@@ -37,8 +37,6 @@ The time is up. However, possible further development of this game should includ
 - When uploading an image, there should be a process indicator.
 
 - All magic numbers should originate from a config object.
-
-- The functions should have more comments
 
 
 # Devtober log
@@ -145,7 +143,7 @@ Let's go!
 
 Setting up the codebase. Identifying and creating different objects, somewhat organized by purpose.
 
-The outer DOM elements `.fullscreen` and `.ratio` have some reset/normalize CSS rules applied to them, to avoid otherwise helpful browser features (such as pull-down to refresh). Features that are only annoying in a game context. The size and position of `ratio` is calculated based on `state.grid` (the current grid size) and different space values defined in `conf{}`.
+Applying some reset/normalize CSS to the outer DOM elements, to avoid otherwise helpful browser features (such as pull-down to refresh). Features that are only annoying in a game context. The size and position of `.ratio` is calculated based on `state.grid` (the current grid size) and different space values defined in `conf{}`.
 
 The board flows inside the ratio container. On each screen resize, the width and height of the board are calculated. The values are set in a runtime style element on the page.
 
@@ -157,7 +155,7 @@ Yuuuup, just like that. Gray area is ratio wrapper. Red area is board with 2px b
 
 ## October 5th
 
-Expanding the runtime css section. I think it's both convenient and tidy to update a style section instead of assigning styles to every DOM element that has changed. This is done for each screen resize, and everytime the grid changes.
+Expanding the runtime css section. I think it's a convenient and tidy technique to have a style section instead of assigning styles to every single DOM element that has changed. This is done for each screen resize, and everytime the grid changes.
 
 Generating tiles based on the selected grid size in `state.grid` and positioning them inside the tiles container. The size of the tiles container is one tile, thus making positioning of the tiles easy and responsive, in 100% increments.
 
@@ -182,7 +180,7 @@ The background image is slightly more tricky. Each tile has a div that is the si
 }
 ```
 
-or rather
+or less verbose
 
 ```
 @for $i from 0 through 7 {
@@ -191,7 +189,7 @@ or rather
 }
 ```
 
-Using the before-element on each tile to set a shiny 2px border.
+Using the before-element on each tile to set a 2px semitransparent highlight/shadow border.
 
 <img src="screenshots/05-bgimage.png"/>
 
@@ -203,7 +201,7 @@ I'll deal with the color palette later :-P
 
 I need to keep track of each tile's position throughout the game. A 2-dimensional array with coordinates should to the trick. That way I only need to check the internal structure instead of checking the DOM.
 
-The array `board.tiles` represents each coordinate of the board. Each element of the array has `{ x: <int>, y: <int> }` where the values reflect the intended coordinate. The game is solved only if all array coordinates correspond to the coordinates in the value. Poor explanation.
+The array `board.tiles` represents each coordinate of the board. Each element of the array has `{ x: <int>, y: <int> }` where the values reflect the intended coordinate. The game is solved only if all array coordinates correspond to the coordinates in the value. No time for a better explanation.
 
 ## October 10th
 
@@ -246,7 +244,7 @@ Check if puzzle is complete.
 
 ## October 23rd
 
-Creating a gear SVG to serve as an options toggle icon. I have reserved 30px for the height of the gear. So how does a poor boy construct the perfect gear symbol? Drawing some examples to find the proper form. Using the same knob path and rotating it 9 times around the origo. Using a mask to get a transparent center. Nice! I love SVG!
+Creating a gear SVG to serve as an options toggle icon. I have reserved 30px for the height of the gear. So how does a poor boy construct the perfect gear symbol? Drawing some examples to find the proper form. Using the same knob path and rotating it 9 times around the origo. Using a mask to get a transparent center. Nice! I love SVG! Let me repeat that: I love SVG!!
 
 <img src="screenshots/06-gear-knobs.jpg" />
 
@@ -273,7 +271,7 @@ Creating a shuffle icon and ading it to the options pane. Adding more images, as
 
 ## October 30th
 
-The options section is annoying and not user friendly at all! I'm going to put the icons to the left of the gear, and let the gear toggle the visibility. Now the user can choose to have the options always visible or not. Adding a transition on opacity when toggling the visibility. Smooth AF!
+The options section is annoying and not user friendly at all! I'm going to put the icons to the left of the gear, and let the gear toggle the visibility. Now the user can choose to have the options always visible or not. Adding a transition on opacity when toggling the visibility. Smooth AF! I reduce the number of grid alternatives. 3, 4 and 5 is enough.
 
 Now, for the drag-drop.
 Adding class `droppable` to the parent container. When the user drags an image over the page, the background color should respond to that.
